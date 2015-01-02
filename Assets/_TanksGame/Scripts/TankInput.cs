@@ -18,19 +18,24 @@ namespace Tank
         private void Update()
         {
             if (Input.GetKey(KeyCode.W)) {
-                tankCommander.moveForward();
+                tankCommander.MoveForward();
             }
             if (Input.GetKey(KeyCode.S)) {
-                tankCommander.moveBackward();
+                tankCommander.MoveBackward();
             }
             if (Input.GetKey(KeyCode.A)) {
-                tankCommander.turnLeft();
+                tankCommander.TurnLeft();
             }
             if (Input.GetKey(KeyCode.D)) {
-                tankCommander.turnRight();
+                tankCommander.TurnRight();
             }
-            if (Input.GetAxis("Mouse X") > 0f) {
+
+            if (Master.inputMaster.mouse0) {
+                tankCommander.Fire();
             }
+
+            tankCommander.LookHorizontal(Input.GetAxis("Mouse X"));
+            tankCommander.LookVertical(Input.GetAxis("Mouse Y"));
         }
     }
 }

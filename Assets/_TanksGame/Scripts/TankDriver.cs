@@ -5,6 +5,9 @@ namespace Tank
 {
     public class TankDriver : MonoBehaviour
     {
+        public GameObject tankTop;
+        public GameObject tankGun;
+
         public float maxForward = 1f;
         public float maxBackward = 2f;
         public float maxTurnRate = 1f;
@@ -29,6 +32,12 @@ namespace Tank
                 speedNormalized = value;
             }
         }
+
+        // Main gun movement (look)
+        public float maxLookUp;
+
+        public float maxLookDown;
+        private float gunAngle = 0f;
 
         private void Awake()
         {
@@ -77,6 +86,30 @@ namespace Tank
 
             currentForwardSpeed = Mathf.Clamp(currentForwardSpeed, -maxBackward, maxForward);
             currentTurnRate = Mathf.Clamp(currentTurnRate, -maxTurnRate, maxTurnRate);
+        }
+
+        public void LookOrder(TankLook tankLook)
+        {
+            tankTop.transform.Rotate(0f, tankLook.x, 0f, Space.Self);
+            RotateGun(tankLook.y);
+        }
+
+        private void RotateGun(float y)
+        {
+            Transform gunTrans = tankGun.transform;
+
+            gunTrans.Rotate(y, 0f, 0f, Space.Self);
+            gunAngle += y;
+
+            if (gunAngle > maxLookUp) {
+                float adjustX = gunAngle - maxLookUp;
+                gunTrans.Rotate(-adjustX, 0f, 0f, Space.Self);
+                gunAngle += -adjustX;
+            } else if (gunAngle < maxLookDown) {
+                float adjustX = maxLookDown - gunAngle;
+                gunTrans.Rotate(adjustX, 0f, 0f, Space.Self);
+                gunAngle += adjustX;
+            }
         }
     }
 }

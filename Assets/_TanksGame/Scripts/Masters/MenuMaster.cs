@@ -1,17 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MenuMaster : MonoBehaviour
+public class MenuMaster : Master
 {
-    private void Awake()
-    {
-    }
-
-    private void Start()
-    {
-    }
-
-    private void Update()
+    public MenuMaster()
     {
     }
 }

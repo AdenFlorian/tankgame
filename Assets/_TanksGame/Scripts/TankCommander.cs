@@ -5,8 +5,10 @@ namespace Tank
 {
     public class TankCommander : MonoBehaviour
     {
-        private TankMove tankMove = new TankMove();
         public TankDriver driver;
+
+        private TankMove tankMove = new TankMove();
+        private TankLook tankLook = new TankLook();
 
         private void Awake()
         {
@@ -20,26 +22,42 @@ namespace Tank
         {
             driver.MoveOrder(tankMove);
             tankMove.Clear();
+            driver.LookOrder(tankLook);
+            tankLook.Clear();
         }
 
-        public void moveForward()
+        public void MoveForward()
         {
             tankMove.forth = true;
         }
 
-        public void moveBackward()
+        public void MoveBackward()
         {
             tankMove.back = true;
         }
 
-        public void turnLeft()
+        public void TurnLeft()
         {
             tankMove.left = true;
         }
 
-        public void turnRight()
+        public void TurnRight()
         {
             tankMove.right = true;
+        }
+
+        public void LookHorizontal(float input)
+        {
+            tankLook.x = input;
+        }
+
+        public void LookVertical(float input)
+        {
+            tankLook.y = input;
+        }
+
+        public void Fire()
+        {
         }
     }
 
@@ -61,6 +79,23 @@ namespace Tank
             back = false;
             left = false;
             right = false;
+        }
+    }
+
+    public class TankLook
+    {
+        public TankLook()
+        {
+            Clear();
+        }
+
+        public float x;
+        public float y;
+
+        public void Clear()
+        {
+            x = 0f;
+            y = 0f;
         }
     }
 }

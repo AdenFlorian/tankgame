@@ -1,17 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
-public class GameMaster : MonoBehaviour
+public class GameMaster : Master
 {
-	void Awake()
-	{
-	}
+    public GameMaster()
+    {
+    }
 
-	void Start()
-	{
-	}
-
-	void Update()
-	{
-	}
+    public void Update()
+    {
+        inputMaster.ProcessInput();
+    }
 }

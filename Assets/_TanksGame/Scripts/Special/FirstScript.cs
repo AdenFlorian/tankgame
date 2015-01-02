@@ -5,6 +5,7 @@ public class FirstScript : MonoBehaviour
 {
     private void Awake()
     {
+        Master.Begin();
     }
 
     private void Start()
@@ -13,5 +14,6 @@ public class FirstScript : MonoBehaviour
 
     private void Update()
     {
+        Master.gameMaster.Update();
     }
 }
