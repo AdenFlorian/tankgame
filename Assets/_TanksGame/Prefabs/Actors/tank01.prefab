@@ -434,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tankTop: {fileID: 117690}
+  tankGun: {fileID: 0}
   maxForward: .100000001
   maxBackward: .0500000007
   maxTurnRate: 2
