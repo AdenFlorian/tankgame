@@ -21,17 +21,17 @@ public class Text
             case SystemLanguage.English:
                 langStringField = EnglishText.GetField(line);
                 return langStringField.GetValue(EnglishText) as string;
-                break;
+            //break;
 
             case SystemLanguage.Spanish:
                 langStringField = SpanishText.GetField(line);
                 return langStringField.GetValue(SpanishText) as string;
-                break;
+            //break;
 
             default:
                 langStringField = EnglishText.GetField(line);
                 return langStringField.GetValue(EnglishText) as string;
-                break;
+            //break;
         }
     }
 }

@@ -11,9 +11,6 @@ public class Translator : MonoBehaviour
     private Command MouseXAxis = new TankLookHorizontalCommand();
     private Command MouseYAxis = new TankLookVerticalCommand();
 
-    private Command KeyDownSpace;
-    private Command MouseUp0;
-
     private void Awake()
     {
     }
@@ -35,12 +32,6 @@ public class Translator : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D) && KeyHoldD != null) {
             KeyHoldD.Execute(GameMaster.playerTankController);
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && KeyDownSpace != null) {
-            KeyDownSpace.Execute(GameMaster.playerTankController);
-        }
-        if (Input.GetKeyUp(KeyCode.Mouse0) && MouseUp0 != null) {
-            MouseUp0.Execute(GameMaster.playerTankController);
         }
         if (Input.GetKeyDown(KeyCode.Mouse0) && MouseDown0 != null) {
             MouseDown0.Execute(GameMaster.playerTankController);

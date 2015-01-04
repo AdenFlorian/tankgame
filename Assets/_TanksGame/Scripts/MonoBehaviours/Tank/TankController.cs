@@ -11,7 +11,6 @@ namespace Tank
 
         private TankMove tankMove = new TankMove();
         private TankLook tankLook = new TankLook();
-        private bool fireMainGun = false;
 
         private void Awake()
         {
@@ -30,8 +29,6 @@ namespace Tank
             tankMove.Clear();
             driver.LookOrder(tankLook);
             tankLook.Clear();
-
-            fireMainGun = false;
         }
 
         public void MoveForward()
