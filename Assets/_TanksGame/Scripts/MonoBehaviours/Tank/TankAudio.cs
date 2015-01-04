@@ -1,21 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+
 namespace Tank
 {
     public class TankAudio : MonoBehaviour
     {
-        TankModel tankDriver;
+        private TankModel tankDriver;
 
-        void Awake()
+        private void Awake()
         {
             tankDriver = GetComponent<TankModel>();
         }
 
-        void Start()
+        private void Start()
         {
         }
 
-        void Update()
+        private void Update()
         {
             audio.pitch = tankDriver.speedNormalized;
         }

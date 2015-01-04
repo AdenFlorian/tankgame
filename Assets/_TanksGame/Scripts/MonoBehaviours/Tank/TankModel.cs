@@ -9,16 +9,21 @@ namespace Tank
         public GameObject tankGun;
         public TankMainGun tankMainGun;
 
+        // Max values
         public float maxForward = 1f;
         public float maxBackward = 2f;
         public float maxTurnRate = 1f;
 
+        // Acceleration values
         public float accelForward = 0.5f;
         public float accelBackward = 0.5f;
         public float accelTurn = 1f;
+
+        // Friction Values
         public float frictionTurn = 1.5f;
         public float frictionforward = 0.5f;
 
+        // Current values
         public float currentForwardSpeed = 0f;
         public float currentTurnRate = 0f;
 

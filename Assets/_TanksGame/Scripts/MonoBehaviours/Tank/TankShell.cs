@@ -1,32 +1,35 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class TankShell : MonoBehaviour
+namespace Tank
 {
-    public GameObject shellExplosionPrefab;
-
-    private void Awake()
+    public class TankShell : MonoBehaviour
     {
-    }
+        public GameObject shellExplosionPrefab;
 
-    private void Start()
-    {
-    }
+        private void Awake()
+        {
+        }
 
-    private void Update()
-    {
-    }
+        private void Start()
+        {
+        }
 
-    private void OnCollisionEnter()
-    {
-        Explode();
-    }
+        private void Update()
+        {
+        }
 
-    private void Explode()
-    {
-        GameObject newExplosionGO = GameObject.Instantiate(shellExplosionPrefab, transform.position, transform.rotation) as GameObject;
-        Destroy(newExplosionGO, 5f);
-        gameObject.SetActive(false);
-        transform.parent = AmmoPool.Instance.transform;
+        private void OnCollisionEnter()
+        {
+            Explode();
+        }
+
+        private void Explode()
+        {
+            GameObject newExplosionGO = GameObject.Instantiate(shellExplosionPrefab, transform.position, transform.rotation) as GameObject;
+            Destroy(newExplosionGO, 5f);
+            gameObject.SetActive(false);
+            transform.parent = AmmoPool.Instance.transform;
+        }
     }
 }
