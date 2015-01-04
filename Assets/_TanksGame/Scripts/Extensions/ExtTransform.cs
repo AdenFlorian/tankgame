@@ -8,11 +8,39 @@ public static class ExtTransform
         return transform.position.x;
     }
 
-    // <summary>Sets position and rotation to all 0s and scale to all 1s</summary>
-    public static void SetToDefaults(this Transform transform)
+    /// <summary>
+    /// Sets world position to origin (0, 0, 0)
+    /// </summary>
+    /// <param name="transform"></param>
+    public static void ZeroWorldPosition(this Transform transform)
     {
         transform.position = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Sets local position to local origin (0, 0, 0)
+    /// </summary>
+    /// <param name="transform"></param>
+    public static void ZeroLocalPosition(this Transform transform)
+    {
+        transform.localPosition = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Sets world rotation to (0, 0, 0)
+    /// </summary>
+    /// <param name="transform"></param>
+    public static void ZeroWorldRotation(this Transform transform)
+    {
         transform.rotation = Quaternion.identity;
-        transform.localScale = Vector3.one;
+    }
+
+    /// <summary>
+    /// Sets local rotation to (0, 0, 0)
+    /// </summary>
+    /// <param name="transform"></param>
+    public static void ZeroLocalRotation(this Transform transform)
+    {
+        transform.localRotation = Quaternion.identity;
     }
 }

@@ -25,7 +25,6 @@ public class TankShell : MonoBehaviour
     private void Explode()
     {
         GameObject newExplosionGO = GameObject.Instantiate(shellExplosionPrefab, transform.position, transform.rotation) as GameObject;
-        //newExplosionGO.audio.Play();
         Destroy(newExplosionGO, 5f);
         gameObject.SetActive(false);
         transform.parent = AmmoPool.Instance.transform;
