@@ -7,7 +7,9 @@ public class TankAI : MonoBehaviour
     public Transform nextWaypoint;
     public Vector3 distanceVector;
     public Vector3 worldSpaceForwardVector;
+    public Vector3 crossProduct;
     public float distanceToWaypoint;
+    public float dotProduct;
 
     public float angleTowardsWaypoint;
 
@@ -21,6 +23,7 @@ public class TankAI : MonoBehaviour
 
     private void Start()
     {
+        nextWaypoint = GameMaster.playerTankController.transform;
     }
 
     private void Update()
@@ -29,7 +32,8 @@ public class TankAI : MonoBehaviour
         distanceToWaypoint = distanceVector.magnitude;
         worldSpaceForwardVector = tankController.transform.localToWorldMatrix.MultiplyVector(Vector3.forward);
         angleTowardsWaypoint = Vector3.Angle(distanceVector, worldSpaceForwardVector);
-
+        dotProduct = Vector3.Dot(distanceVector, worldSpaceForwardVector);
+        crossProduct = Vector3.Cross(distanceVector, worldSpaceForwardVector);
         CheckIfArrived();
 
         if (arrived) {
@@ -70,6 +74,10 @@ public class TankAI : MonoBehaviour
 
     private void OrientToWaypoint()
     {
-        tankController.TurnLeft();
+        if (crossProduct.y > 0) {
+            tankController.TurnLeft();
+        } else {
+            tankController.TurnRight();
+        }
     }
 }

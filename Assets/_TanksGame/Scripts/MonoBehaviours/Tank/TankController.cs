@@ -15,13 +15,13 @@ namespace Tank
 
         private void Awake()
         {
+            if (playerControlled) {
+                GameMaster.playerTankController = this;
+            }
         }
 
         private void Start()
         {
-            if (playerControlled) {
-                GameMaster.playerTankController = this;
-            }
         }
 
         private void Update()
