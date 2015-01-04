@@ -30,6 +30,7 @@ namespace Tank
                 loadedShell.transform.parent = null;
                 loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.Impulse);
                 loadedShell = null;
+                animation.Play();
                 StartCoroutine("DelayedLoadShell");
             }
         }
