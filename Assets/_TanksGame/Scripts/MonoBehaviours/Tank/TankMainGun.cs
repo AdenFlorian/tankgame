@@ -26,6 +26,7 @@ namespace Tank
         {
             if (loadedShell != null) {
                 barrelTip.audio.Play();
+                barrelTip.particleSystem.Play();
                 loadedShell.rigidbody.isKinematic = false;
                 loadedShell.transform.parent = null;
                 loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.Impulse);
