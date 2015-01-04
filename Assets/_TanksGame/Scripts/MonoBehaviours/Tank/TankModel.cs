@@ -6,8 +6,8 @@ namespace Tank
     public class TankModel : MonoBehaviour
     {
         public GameObject tankTop;
-        public GameObject tankGun;
-        public TankMainGun tankMainGun;
+        private GameObject tankGun;
+        private TankMainGun tankMainGun;
 
         // Max values
         public float maxForward = 1f;
@@ -47,6 +47,8 @@ namespace Tank
 
         private void Awake()
         {
+            tankMainGun = GetComponentInChildren<TankMainGun>();
+            tankGun = tankMainGun.gameObject;
         }
 
         private void Start()

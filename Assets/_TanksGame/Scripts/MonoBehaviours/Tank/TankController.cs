@@ -5,7 +5,7 @@ namespace Tank
 {
     public class TankController : Controller
     {
-        public TankModel driver;
+        private TankModel driver;
 
         public bool playerControlled = true;
 
@@ -17,6 +17,7 @@ namespace Tank
             if (playerControlled) {
                 GameMaster.playerTankController = this;
             }
+            driver = GetComponent<TankModel>();
         }
 
         private void Start()

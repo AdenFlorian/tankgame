@@ -5,12 +5,14 @@ namespace Tank
 {
     public class TankMainGun : MonoBehaviour
     {
-        public GameObject barrelTip;
-        public GameObject shellSlot;
-        public GameObject loadedShell;
+        private GameObject barrelTip;
+        private GameObject shellSlot;
+        private GameObject loadedShell;
 
         private void Awake()
         {
+            barrelTip = transform.FindChild("barrelTip").gameObject;
+            shellSlot = transform.FindChild("shellSlot").gameObject;
         }
 
         private void Start()

@@ -5,7 +5,8 @@ namespace Tank
 {
     public class TankAI : MonoBehaviour
     {
-        public TankController tankController;
+        private TankController tankController;
+
         public Transform nextWaypoint;
         public Vector3 distanceVector;
         public Vector3 worldSpaceForwardVector;
@@ -21,6 +22,7 @@ namespace Tank
 
         private void Awake()
         {
+            tankController = GetComponent<TankController>();
         }
 
         private void Start()
