@@ -7,6 +7,9 @@
 #  .gitignore file, or you WILL lose data! And set force text for asset serialization
 #
 
+# Unity assets to ignore (3rd party)
+[Aa]ssets/UnityVS/
+
 
 # Folders in root
 [Ll]ibrary/
