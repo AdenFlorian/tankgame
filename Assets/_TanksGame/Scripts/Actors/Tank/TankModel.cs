@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankModel : MonoBehaviour
+    public class TankModel : ActorModel
     {
         public GameObject tankTop;
         private GameObject tankGun;

@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Translator : MonoBehaviour
 {
-    private Command KeyHoldW = new TankMoveForwardCommand();
-    private Command KeyHoldS = new TankMoveBackwardCommand();
-    private Command KeyHoldA = new TankTurnLeftCommand();
-    private Command KeyHoldD = new TankTurnRightCommand();
-    private Command MouseDown0 = new TankFireCommand();
-    private Command MouseXAxis = new TankLookHorizontalCommand();
-    private Command MouseYAxis = new TankLookVerticalCommand();
+    private Action KeyHoldW = Actions.TankMoveForwardAction;
+    private Action KeyHoldS = Actions.TankMoveBackwardAction;
+    private Action KeyHoldA = Actions.TankTurnLeftAction;
+    private Action KeyHoldD = Actions.TankTurnRightAction;
+    private Action MouseDown0 = Actions.TankFireAction;
+    private Action MouseXAxis = Actions.TankLookHorizontalAction;
+    private Action MouseYAxis = Actions.TankLookVerticalAction;
 
     private void Awake()
     {
@@ -22,88 +23,27 @@ public class Translator : MonoBehaviour
     private void Update()
     {
         if (Input.GetKey(KeyCode.W) && KeyHoldW != null) {
-            KeyHoldW.Execute(GameMaster.playerTankController);
+            KeyHoldW.Invoke();
         }
         if (Input.GetKey(KeyCode.S) && KeyHoldS != null) {
-            KeyHoldS.Execute(GameMaster.playerTankController);
+            KeyHoldS.Invoke();
         }
         if (Input.GetKey(KeyCode.A) && KeyHoldA != null) {
-            KeyHoldA.Execute(GameMaster.playerTankController);
+            KeyHoldA.Invoke();
         }
         if (Input.GetKey(KeyCode.D) && KeyHoldD != null) {
-            KeyHoldD.Execute(GameMaster.playerTankController);
+            KeyHoldD.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Mouse0) && MouseDown0 != null) {
-            MouseDown0.Execute(GameMaster.playerTankController);
+            MouseDown0.Invoke();
         }
 
         // Axes (Ranges)
         if (MouseXAxis != null) {
-            MouseXAxis.Execute(GameMaster.playerTankController);
+            MouseXAxis.Invoke();
         }
         if (MouseYAxis != null) {
-            MouseYAxis.Execute(GameMaster.playerTankController);
+            MouseYAxis.Invoke();
         }
-    }
-}
-
-public abstract class Command
-{
-    public abstract void Execute(Controller controller);
-}
-
-public class TankMoveForwardCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).MoveForward();
-    }
-}
-
-public class TankMoveBackwardCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).MoveBackward();
-    }
-}
-
-public class TankTurnLeftCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).TurnLeft();
-    }
-}
-
-public class TankTurnRightCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).TurnRight();
-    }
-}
-
-public class TankFireCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).Fire();
-    }
-}
-
-public class TankLookHorizontalCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).LookHorizontal(Input.GetAxis("Mouse X"));
-    }
-}
-
-public class TankLookVerticalCommand : Command
-{
-    public override void Execute(Controller tankControl)
-    {
-        ((Tank.TankController)tankControl).LookVertical(Input.GetAxis("Mouse Y"));
     }
 }

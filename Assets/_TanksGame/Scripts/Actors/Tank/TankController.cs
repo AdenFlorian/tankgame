@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankController : Controller
+    public class TankController : ActorController
     {
         private TankModel driver;
 

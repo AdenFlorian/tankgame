@@ -6,6 +6,7 @@ namespace Tank
     public class TankMainGun : MonoBehaviour
     {
         private GameObject barrelTip;
+        private GameObject gunFireFX;
         private GameObject shellSlot;
         private GameObject loadedShell;
 
@@ -13,6 +14,7 @@ namespace Tank
         {
             barrelTip = transform.FindChild("barrelTip").gameObject;
             shellSlot = transform.FindChild("shellSlot").gameObject;
+            gunFireFX = transform.FindChild("gunFireFX").gameObject;
         }
 
         private void Start()
@@ -28,7 +30,7 @@ namespace Tank
         {
             if (loadedShell != null) {
                 barrelTip.audio.Play();
-                barrelTip.particleSystem.Play();
+                gunFireFX.particleSystem.Play();
                 loadedShell.rigidbody.isKinematic = false;
                 loadedShell.transform.parent = null;
                 loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.Impulse);
