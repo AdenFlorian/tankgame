@@ -13,7 +13,7 @@ GameObject:
   - 65: {fileID: 6527506}
   - 114: {fileID: 11405846}
   m_Layer: 0
-  m_Name: TankShell
+  m_Name: tankShell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
