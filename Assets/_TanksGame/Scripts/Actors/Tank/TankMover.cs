@@ -44,17 +44,11 @@ namespace Tank
         public float maxLookDown;
         private float gunAngle = 0f;
 
-        private void Start()
-        {
-        }
-
         private void Update()
         {
             transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed));
 
             transform.Rotate(0f, currentTurnRate, 0f, Space.Self);
-
-            tank.mover.speedNormalized = speedNormalized;
         }
 
         public void LookOrder(TankLook tankLook)

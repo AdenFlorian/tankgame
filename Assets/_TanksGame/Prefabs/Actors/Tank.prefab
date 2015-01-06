@@ -60,7 +60,7 @@ GameObject:
   - 114: {fileID: 11413948}
   - 198: {fileID: 19802690}
   m_Layer: 0
-  m_Name: treadDustFX
+  m_Name: dustFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -901,7 +901,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704b4fe38c8512b49a36387c37c0cab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlledBy: 1
+  tankTop: {fileID: 117690}
+  audio: {fileID: 0}
+  controllerAI: {fileID: 0}
+  controllerPlayer: {fileID: 0}
+  dustFX: {fileID: 0}
+  hitboxes: {fileID: 0}
+  mainGun: {fileID: 0}
+  mover: {fileID: 0}
+  controlledBy: 0
 --- !u!114 &11445678
 MonoBehaviour:
   m_ObjectHideFlags: 1

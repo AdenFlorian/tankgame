@@ -3,22 +3,18 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankMainGun : MonoBehaviour
+    public class TankMainGun : TankComponent
     {
         private GameObject barrelTip;
         private GameObject gunFireFX;
         private GameObject shellSlot;
         private GameObject loadedShell;
 
-        private void Awake()
+        private void Start()
         {
             barrelTip = transform.FindChild("barrelTip").gameObject;
             shellSlot = transform.FindChild("shellSlot").gameObject;
             gunFireFX = transform.FindChild("gunFireFX").gameObject;
-        }
-
-        private void Start()
-        {
             LoadNewShell();
         }
 

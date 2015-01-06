@@ -5,7 +5,7 @@ namespace Tank
 {
     public class TankAudio : TankComponent
     {
-        private void Update()
+        protected void Update()
         {
             audio.pitch = tank.mover.speedNormalized;
         }

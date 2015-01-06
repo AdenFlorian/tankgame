@@ -1,0 +1,9 @@
+# Commented lines start with a '#'
+# Put action name on left of '='
+# Put inputs on left side of '=' and multiple inputs separated by commas ','
+MoveForward=W
+MoveBackward=S
+TurnLeft=A
+TurnRight=D
+PrimaryFire=Mouse0
+SecondaryFire=Mouse1

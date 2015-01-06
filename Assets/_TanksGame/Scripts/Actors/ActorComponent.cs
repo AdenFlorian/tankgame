@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ActorComponent : MonoBehaviour
 {
-    protected Actor model;
+    protected Actor actor;
 
     protected virtual void Awake()
     {
@@ -13,10 +13,10 @@ public abstract class ActorComponent : MonoBehaviour
 
     protected void FindParentModel()
     {
-        model = GetComponent<Actor>();
-        if (model == null) {
-            model = GetComponentInParent<Actor>();
-            if (model == null) {
+        actor = GetComponent<Actor>();
+        if (actor == null) {
+            actor = GetComponentInParent<Actor>();
+            if (actor == null) {
                 throw new ComponentWithoutParentModelException();
             }
         }

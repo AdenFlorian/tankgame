@@ -11,11 +11,11 @@ namespace Tank
 
     public class Tank : Actor
     {
-        public GameObject tankTop { get; private set; }
+        public GameObject tankTop;
         public GameObject tankGun { get; private set; }
 
         // Tank Components
-        public TankAudio audio;
+        public new TankAudio audio;
         public TankControllerAI controllerAI;
         public TankControllerPlayer controllerPlayer;
         public TankControllerPlayer dustFX;
@@ -46,6 +46,9 @@ namespace Tank
         {
             if (controlledBy == TankControllerType.Player) {
                 GameMaster.playerTank = this;
+                controllerPlayer.enabled = true;
+            } else {
+                controllerAI.enabled = true;
             }
             tankGun = mainGun.gameObject;
         }
