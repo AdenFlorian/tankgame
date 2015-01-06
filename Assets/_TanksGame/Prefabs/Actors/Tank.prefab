@@ -123,11 +123,11 @@ GameObject:
   - 4: {fileID: 431426}
   - 95: {fileID: 9531434}
   - 114: {fileID: 11431430}
-  - 114: {fileID: 11431428}
-  - 82: {fileID: 8231434}
   - 114: {fileID: 11445678}
-  - 114: {fileID: 11487474}
   - 114: {fileID: 11468604}
+  - 114: {fileID: 11431428}
+  - 114: {fileID: 11487474}
+  - 82: {fileID: 8231434}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -938,15 +938,15 @@ MonoBehaviour:
   maxForward: .100000001
   maxBackward: .0500000007
   maxTurnRate: 2
-  accelForward: .5
-  accelBackward: .5
-  accelTurn: 1
-  frictionTurn: 1.5
-  frictionforward: .5
+  accelForward: .100000001
+  accelBackward: .0500000007
+  accelTurn: 4
+  frictionTurn: 6
+  frictionforward: .0900000036
   currentForwardSpeed: 0
   currentTurnRate: 0
-  maxLookUp: 0
-  maxLookDown: 0
+  maxLookUp: 27
+  maxLookDown: -5
 --- !u!114 &11487474
 MonoBehaviour:
   m_ObjectHideFlags: 1
