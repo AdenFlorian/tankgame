@@ -5,7 +5,7 @@ namespace Tank
 {
     public class TankAI : MonoBehaviour
     {
-        private TankController tankController;
+        private Tank tankController;
 
         public Transform nextWaypoint;
         public Vector3 distanceVector;
@@ -22,12 +22,12 @@ namespace Tank
 
         private void Awake()
         {
-            tankController = GetComponent<TankController>();
+            tankController = GetComponent<Tank>();
         }
 
         private void Start()
         {
-            nextWaypoint = GameMaster.playerTankController.transform;
+            nextWaypoint = GameMaster.playerTank.transform;
         }
 
         private void Update()

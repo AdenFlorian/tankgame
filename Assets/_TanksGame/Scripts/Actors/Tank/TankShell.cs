@@ -19,8 +19,10 @@ namespace Tank
         {
         }
 
-        private void OnCollisionEnter()
+        private void OnCollisionEnter(Collision collision)
         {
+            // Make sure the shell didn't collide with the tank that fired it
+
             Explode();
         }
 

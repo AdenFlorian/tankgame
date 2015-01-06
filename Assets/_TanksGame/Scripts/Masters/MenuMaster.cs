@@ -5,5 +5,6 @@ public class MenuMaster : Master
 {
     public MenuMaster()
     {
+        Debug.Log(GetType().Name + " Loaded!");
     }
 }

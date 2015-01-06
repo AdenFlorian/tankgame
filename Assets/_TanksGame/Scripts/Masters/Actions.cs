@@ -5,23 +5,23 @@ using System;
 public static class Actions
 {
     public static Action TankMoveForwardAction =
-        () => GameMaster.playerTankController.MoveForward();
+        () => GameMaster.playerTank.MoveForward();
 
     public static Action TankMoveBackwardAction =
-        () => GameMaster.playerTankController.MoveBackward();
+        () => GameMaster.playerTank.MoveBackward();
 
     public static Action TankTurnLeftAction =
-        () => GameMaster.playerTankController.TurnLeft();
+        () => GameMaster.playerTank.TurnLeft();
 
     public static Action TankTurnRightAction =
-        () => GameMaster.playerTankController.TurnRight();
+        () => GameMaster.playerTank.TurnRight();
 
     public static Action TankFireAction =
-        () => GameMaster.playerTankController.Fire();
+        () => GameMaster.playerTank.Fire();
 
     public static Action TankLookHorizontalAction =
-        () => GameMaster.playerTankController.LookHorizontal(Input.GetAxis("Mouse X"));
+        () => GameMaster.playerTank.LookHorizontal(Input.GetAxis("Mouse X"));
 
     public static Action TankLookVerticalAction =
-        () => GameMaster.playerTankController.LookVertical(Input.GetAxis("Mouse Y"));
+        () => GameMaster.playerTank.LookVertical(Input.GetAxis("Mouse Y"));
 }

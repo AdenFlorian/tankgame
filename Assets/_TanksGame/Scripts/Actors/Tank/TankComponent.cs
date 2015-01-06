@@ -5,12 +5,12 @@ namespace Tank
 {
     public abstract class TankComponent : ActorComponent
     {
-        protected TankModel tankModel;
+        protected Tank tankModel;
 
         protected override void Awake()
         {
             base.Awake();
-            tankModel = model as TankModel;
+            tankModel = model as Tank;
         }
     }
 }

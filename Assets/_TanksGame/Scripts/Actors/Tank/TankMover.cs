@@ -3,15 +3,14 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankModel : ActorModel
+    public class TankMover : TankComponent
     {
-        public GameObject tankTop;
-        private GameObject tankGun;
-        private TankMainGun tankMainGun;
-
         // Max values
+        [Range(0, 1)]
         public float maxForward = 1f;
+        [Range(0, 0.5f)]
         public float maxBackward = 2f;
+        [Range(0, 4)]
         public float maxTurnRate = 1f;
 
         // Acceleration values
@@ -45,12 +44,6 @@ namespace Tank
         public float maxLookDown;
         private float gunAngle = 0f;
 
-        private void Awake()
-        {
-            tankMainGun = GetComponentInChildren<TankMainGun>();
-            tankGun = tankMainGun.gameObject;
-        }
-
         private void Start()
         {
         }
@@ -60,6 +53,32 @@ namespace Tank
             transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed));
 
             transform.Rotate(0f, currentTurnRate, 0f, Space.Self);
+
+            tankModel.speedNormalized = speedNormalized;
+        }
+
+        public void LookOrder(TankLook tankLook)
+        {
+            tankModel.tankTop.transform.Rotate(0f, tankLook.x, 0f, Space.Self);
+            RotateGun(tankLook.y);
+        }
+
+        private void RotateGun(float y)
+        {
+            Transform gunTrans = tankModel.tankGun.transform;
+
+            gunTrans.Rotate(y, 0f, 0f, Space.Self);
+            gunAngle += y;
+
+            if (gunAngle > maxLookUp) {
+                float adjustX = gunAngle - maxLookUp;
+                gunTrans.Rotate(-adjustX, 0f, 0f, Space.Self);
+                gunAngle += -adjustX;
+            } else if (gunAngle < maxLookDown) {
+                float adjustX = maxLookDown - gunAngle;
+                gunTrans.Rotate(adjustX, 0f, 0f, Space.Self);
+                gunAngle += adjustX;
+            }
         }
 
         public void MoveOrder(TankMove moveOrder)
@@ -94,35 +113,6 @@ namespace Tank
 
             currentForwardSpeed = Mathf.Clamp(currentForwardSpeed, -maxBackward, maxForward);
             currentTurnRate = Mathf.Clamp(currentTurnRate, -maxTurnRate, maxTurnRate);
-        }
-
-        public void LookOrder(TankLook tankLook)
-        {
-            tankTop.transform.Rotate(0f, tankLook.x, 0f, Space.Self);
-            RotateGun(tankLook.y);
-        }
-
-        private void RotateGun(float y)
-        {
-            Transform gunTrans = tankGun.transform;
-
-            gunTrans.Rotate(y, 0f, 0f, Space.Self);
-            gunAngle += y;
-
-            if (gunAngle > maxLookUp) {
-                float adjustX = gunAngle - maxLookUp;
-                gunTrans.Rotate(-adjustX, 0f, 0f, Space.Self);
-                gunAngle += -adjustX;
-            } else if (gunAngle < maxLookDown) {
-                float adjustX = maxLookDown - gunAngle;
-                gunTrans.Rotate(adjustX, 0f, 0f, Space.Self);
-                gunAngle += adjustX;
-            }
-        }
-
-        public void FireOrder()
-        {
-            tankMainGun.Fire();
         }
     }
 }

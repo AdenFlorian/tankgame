@@ -5,12 +5,12 @@ namespace Tank
 {
     public class TankDustFX : MonoBehaviour
     {
-        private TankModel tankModel;
+        private Tank tankModel;
         private float startEmissionRate;
 
         private void Awake()
         {
-            tankModel = GetComponentInParent<TankModel>();
+            tankModel = GetComponentInParent<Tank>();
             startEmissionRate = particleSystem.emissionRate;
         }
 

@@ -7,6 +7,7 @@ public class InputMaster : Master
 
     public InputMaster()
     {
+        Debug.Log(GetType().Name + " Loaded!");
     }
 
     public void ProcessInput()

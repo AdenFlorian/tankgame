@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Translates user input to actions
+/// </summary>
 public class Translator : MonoBehaviour
 {
     private Action KeyHoldW = Actions.TankMoveForwardAction;
@@ -14,6 +17,7 @@ public class Translator : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log(GetType().Name + " Loaded!");
     }
 
     private void Start()

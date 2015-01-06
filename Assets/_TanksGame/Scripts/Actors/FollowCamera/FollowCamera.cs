@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class FollowCamera : ActorModel
+public class FollowCamera : Actor
 {
     public Transform target;
     public bool follow = true;

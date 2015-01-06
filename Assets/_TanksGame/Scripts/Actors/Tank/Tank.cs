@@ -3,21 +3,31 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankController : ActorController
+    public class Tank : Actor
     {
-        private TankModel driver;
+        public GameObject tankTop;
+        public GameObject tankGun;
+        private TankMainGun tankMainGun;
+        private TankMover tankMover;
 
         public bool playerControlled = true;
 
         private TankMove tankMove = new TankMove();
         private TankLook tankLook = new TankLook();
 
+        public float speedNormalized = 0f;
+
         private void Awake()
         {
-            if (playerControlled) {
-                GameMaster.playerTankController = this;
+            tankMainGun = GetComponentInChildren<TankMainGun>();
+            tankMover = GetComponent<TankMover>();
+            if (tankMover == null) {
+                Debug.LogError("WTF");
             }
-            driver = GetComponent<TankModel>();
+            tankGun = tankMainGun.gameObject;
+            if (playerControlled) {
+                GameMaster.playerTank = this;
+            }
         }
 
         private void Start()
@@ -26,9 +36,9 @@ namespace Tank
 
         private void Update()
         {
-            driver.MoveOrder(tankMove);
+            tankMover.MoveOrder(tankMove);
             tankMove.Clear();
-            driver.LookOrder(tankLook);
+            tankMover.LookOrder(tankLook);
             tankLook.Clear();
         }
 
@@ -64,7 +74,7 @@ namespace Tank
 
         public void Fire()
         {
-            driver.FireOrder();
+            tankMainGun.Fire();
         }
     }
 
