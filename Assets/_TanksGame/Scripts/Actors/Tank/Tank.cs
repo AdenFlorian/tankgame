@@ -18,8 +18,8 @@ namespace Tank
         public new TankAudio audio;
         public TankControllerAI controllerAI;
         public TankControllerPlayer controllerPlayer;
-        public TankControllerPlayer dustFX;
-        public TankControllerPlayer hitboxes;
+        public TankDustFX dustFX;
+        public TankHitboxes hitboxes;
         public TankMainGun mainGun;
         public TankMover mover;
 
