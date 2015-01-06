@@ -12,10 +12,6 @@ public class FollowCamera : Actor
     public float desiredHeightOffset = 10f;
     public float desiredAngleOffset = 10f;
 
-    private void Awake()
-    {
-    }
-
     private void Start()
     {
     }

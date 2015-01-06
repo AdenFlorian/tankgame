@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class TankHitboxes : MonoBehaviour
+namespace Tank
 {
-    private void Awake()
+    public class TankHitboxes : TankComponent
     {
-    }
+        private void Start()
+        {
+            //Get all hitboxes attached to tank
+            Debug.Log(gameObject.GetComponentsInChildren<Collider>().Length);
+        }
 
-    private void Start()
-    {
-        //Get all hitboxes attached to tank
-        Debug.Log(gameObject.GetComponentsInChildren<Collider>().Length);
-    }
-
-    private void Update()
-    {
+        private void Update()
+        {
+        }
     }
 }

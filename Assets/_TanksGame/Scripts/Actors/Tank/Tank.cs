@@ -17,8 +17,9 @@ namespace Tank
 
         public float speedNormalized = 0f;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             tankMainGun = GetComponentInChildren<TankMainGun>();
             tankMover = GetComponent<TankMover>();
             if (tankMover == null) {

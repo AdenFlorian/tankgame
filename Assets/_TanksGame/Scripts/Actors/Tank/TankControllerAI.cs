@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankAI : MonoBehaviour
+    public class TankControllerAI : MonoBehaviour
     {
-        private Tank tankController;
+        private Tank tank;
 
         public Transform nextWaypoint;
         public Vector3 distanceVector;
@@ -22,7 +22,7 @@ namespace Tank
 
         private void Awake()
         {
-            tankController = GetComponent<Tank>();
+            tank = GetComponent<Tank>();
         }
 
         private void Start()
@@ -32,9 +32,9 @@ namespace Tank
 
         private void Update()
         {
-            distanceVector = nextWaypoint.position - tankController.transform.position;
+            distanceVector = nextWaypoint.position - tank.transform.position;
             distanceToWaypoint = distanceVector.magnitude;
-            worldSpaceForwardVector = tankController.transform.localToWorldMatrix.MultiplyVector(Vector3.forward);
+            worldSpaceForwardVector = tank.transform.localToWorldMatrix.MultiplyVector(Vector3.forward);
             angleTowardsWaypoint = Vector3.Angle(distanceVector, worldSpaceForwardVector);
             dotProduct = Vector3.Dot(distanceVector, worldSpaceForwardVector);
             crossProduct = Vector3.Cross(distanceVector, worldSpaceForwardVector);
@@ -60,7 +60,7 @@ namespace Tank
             // Check if pointed towards next waypoint
             CheckOrientationTowardsWaypoint();
             if (pointedTowardsNextWaypoint) {
-                tankController.MoveForward();
+                tank.MoveForward();
             } else {
 
                 // Point self towards next waypnt
@@ -80,9 +80,9 @@ namespace Tank
         private void OrientToWaypoint()
         {
             if (crossProduct.y > 0) {
-                tankController.TurnLeft();
+                tank.TurnLeft();
             } else {
-                tankController.TurnRight();
+                tank.TurnRight();
             }
         }
     }
