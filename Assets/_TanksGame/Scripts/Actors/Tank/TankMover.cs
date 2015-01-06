@@ -54,18 +54,18 @@ namespace Tank
 
             transform.Rotate(0f, currentTurnRate, 0f, Space.Self);
 
-            tankModel.speedNormalized = speedNormalized;
+            tank.mover.speedNormalized = speedNormalized;
         }
 
         public void LookOrder(TankLook tankLook)
         {
-            tankModel.tankTop.transform.Rotate(0f, tankLook.x, 0f, Space.Self);
+            tank.tankTop.transform.Rotate(0f, tankLook.x, 0f, Space.Self);
             RotateGun(tankLook.y);
         }
 
         private void RotateGun(float y)
         {
-            Transform gunTrans = tankModel.tankGun.transform;
+            Transform gunTrans = tank.tankGun.transform;
 
             gunTrans.Rotate(y, 0f, 0f, Space.Self);
             gunAngle += y;

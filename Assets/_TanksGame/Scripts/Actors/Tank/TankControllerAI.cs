@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankControllerAI : MonoBehaviour
+    public class TankControllerAI : TankComponent
     {
-        private Tank tank;
-
         public Transform nextWaypoint;
         public Vector3 distanceVector;
         public Vector3 worldSpaceForwardVector;
@@ -19,11 +17,6 @@ namespace Tank
         public bool arrived = false;
 
         public bool pointedTowardsNextWaypoint = false;
-
-        private void Awake()
-        {
-            tank = GetComponent<Tank>();
-        }
 
         private void Start()
         {

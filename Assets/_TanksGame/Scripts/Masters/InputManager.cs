@@ -16,12 +16,8 @@ using UnityEngine;
 /// </summary>
 public class InputManager : MonoBehaviour
 {
-    //bool debugMode = false;
-
     private static string configLocalPath = @"\Bamboo\Config\KeyBindings.txt";
     private static string configFullPath;
-
-    //static bool initialized = false;
 
     // Holds the default keys for all the actions
     //Dictionary<ActionCode, List<bb_KeyCode>> defaultKeysDict = new Dictionary<ActionCode, List<bb_KeyCode>>();
@@ -136,13 +132,13 @@ public class InputManager : MonoBehaviour
     {
         // **WEAPON** //
         currentKeysDict[ActionCode.PrimaryFire].Add(bb_KeyCode.Mouse0);
-
         currentKeysDict[ActionCode.SecondaryFire].Add(bb_KeyCode.Mouse1);
 
         // **MOVEMENT** //
         currentKeysDict[ActionCode.MoveForward].Add(bb_KeyCode.W);
-
         currentKeysDict[ActionCode.MoveBackward].Add(bb_KeyCode.S);
+        currentKeysDict[ActionCode.TurnLeft].Add(bb_KeyCode.A);
+        currentKeysDict[ActionCode.TurnRight].Add(bb_KeyCode.D);
     }
 
     #endregion Dictionary Methods
@@ -372,6 +368,22 @@ public class InputManager : MonoBehaviour
         return isAction;
     }
 
+    public static float GetAxis(AxisCode axisCode)
+    {
+        float result = 0f;
+
+        switch (axisCode) {
+            case AxisCode.LookHorizontal:
+                result = Input.GetAxis("Mouse X");
+                break;
+            case AxisCode.LookVertical:
+                result = Input.GetAxis("Mouse Y");
+                break;
+        }
+
+        return result;
+    }
+
     #endregion InputFunctions
 }
 
@@ -431,6 +443,12 @@ public enum ActionCode
     TurnRight,
     PrimaryFire,
     SecondaryFire
+}
+
+public enum AxisCode
+{
+    LookHorizontal,
+    LookVertical
 }
 
 /// <summary>

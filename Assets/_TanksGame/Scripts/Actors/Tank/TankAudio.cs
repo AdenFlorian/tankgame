@@ -7,7 +7,7 @@ namespace Tank
     {
         private void Update()
         {
-            audio.pitch = tankModel.speedNormalized;
+            audio.pitch = tank.mover.speedNormalized;
         }
     }
 }

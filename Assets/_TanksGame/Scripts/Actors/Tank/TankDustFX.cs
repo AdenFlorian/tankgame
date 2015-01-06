@@ -3,24 +3,18 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankDustFX : MonoBehaviour
+    public class TankDustFX : TankComponent
     {
-        private Tank tankModel;
         private float startEmissionRate;
-
-        private void Awake()
-        {
-            tankModel = GetComponentInParent<Tank>();
-            startEmissionRate = particleSystem.emissionRate;
-        }
 
         private void Start()
         {
+            startEmissionRate = particleSystem.emissionRate;
         }
 
         private void Update()
         {
-            particleSystem.emissionRate = startEmissionRate * Mathf.Abs(tankModel.speedNormalized);
+            particleSystem.emissionRate = startEmissionRate * Mathf.Abs(tank.mover.speedNormalized);
         }
     }
 }

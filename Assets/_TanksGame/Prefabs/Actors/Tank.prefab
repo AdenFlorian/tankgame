@@ -124,6 +124,7 @@ GameObject:
   - 95: {fileID: 9531434}
   - 114: {fileID: 11431430}
   - 114: {fileID: 11445678}
+  - 114: {fileID: 11489376}
   - 114: {fileID: 11468604}
   - 114: {fileID: 11431428}
   - 114: {fileID: 11487474}
@@ -900,10 +901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704b4fe38c8512b49a36387c37c0cab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankTop: {fileID: 117690}
-  tankGun: {fileID: 0}
-  playerControlled: 1
-  speedNormalized: 0
+  controlledBy: 1
 --- !u!114 &11445678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -956,6 +954,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54dea6c855f34b549a7f7b48f0b02498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11489376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9efd346a28246a49bba35042335a4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!198 &19802690

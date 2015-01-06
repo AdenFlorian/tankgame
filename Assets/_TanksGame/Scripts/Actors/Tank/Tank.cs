@@ -3,43 +3,58 @@ using UnityEngine;
 
 namespace Tank
 {
+    public enum TankControllerType
+    {
+        Player,
+        AI
+    }
+
     public class Tank : Actor
     {
-        public GameObject tankTop;
-        public GameObject tankGun;
-        private TankMainGun tankMainGun;
-        private TankMover tankMover;
+        public GameObject tankTop { get; private set; }
+        public GameObject tankGun { get; private set; }
 
-        public bool playerControlled = true;
+        // Tank Components
+        public TankAudio audio;
+        public TankControllerAI controllerAI;
+        public TankControllerPlayer controllerPlayer;
+        public TankControllerPlayer dustFX;
+        public TankControllerPlayer hitboxes;
+        public TankMainGun mainGun;
+        public TankMover mover;
 
+        public TankControllerType controlledBy = TankControllerType.AI;
+
+        // Info for tankMover
         private TankMove tankMove = new TankMove();
         private TankLook tankLook = new TankLook();
 
-        public float speedNormalized = 0f;
+        //public float speedNormalized = 0f;
 
         protected override void Awake()
         {
             base.Awake();
-            tankMainGun = GetComponentInChildren<TankMainGun>();
-            tankMover = GetComponent<TankMover>();
-            if (tankMover == null) {
+
+            //mainGun = GetComponentInChildren<TankMainGun>();
+            //mover = GetComponent<TankMover>();
+            /*if (mover == null) {
                 Debug.LogError("WTF");
-            }
-            tankGun = tankMainGun.gameObject;
-            if (playerControlled) {
-                GameMaster.playerTank = this;
-            }
+            }*/
         }
 
         private void Start()
         {
+            if (controlledBy == TankControllerType.Player) {
+                GameMaster.playerTank = this;
+            }
+            tankGun = mainGun.gameObject;
         }
 
         private void Update()
         {
-            tankMover.MoveOrder(tankMove);
+            mover.MoveOrder(tankMove);
             tankMove.Clear();
-            tankMover.LookOrder(tankLook);
+            mover.LookOrder(tankLook);
             tankLook.Clear();
         }
 
@@ -75,7 +90,7 @@ namespace Tank
 
         public void Fire()
         {
-            tankMainGun.Fire();
+            mainGun.Fire();
         }
     }
 
