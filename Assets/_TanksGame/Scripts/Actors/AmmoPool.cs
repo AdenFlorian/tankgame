@@ -41,6 +41,7 @@ public class AmmoPool : MonoBehaviour
         } else {
             shellIndex++;
         }
+        tankShellPool[shellIndex].SetActive(true);
         return tankShellPool[shellIndex];
     }
 }
