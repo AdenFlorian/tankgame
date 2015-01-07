@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankControllerAI : TankComponent
+    public class TankControllerAI : TankController
     {
         public Transform nextWaypoint;
         public Vector3 distanceVector;
@@ -55,7 +55,6 @@ namespace Tank
             if (pointedTowardsNextWaypoint) {
                 tank.MoveForward();
             } else {
-
                 // Point self towards next waypnt
                 OrientToWaypoint();
             }

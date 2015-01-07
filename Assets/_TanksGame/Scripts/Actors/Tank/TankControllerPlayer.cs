@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tank
 {
-    public class TankControllerPlayer : TankComponent
+    public class TankControllerPlayer : TankController
     {
         private void Update()
         {

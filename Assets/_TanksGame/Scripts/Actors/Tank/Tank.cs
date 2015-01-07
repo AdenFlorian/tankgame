@@ -14,16 +14,17 @@ namespace Tank
         public GameObject tankTop;
         public GameObject tankGun { get; private set; }
 
+        public TankController controller;
+
         // Tank Components
         public new TankAudio audio;
-        public TankControllerAI controllerAI;
-        public TankControllerPlayer controllerPlayer;
+        public new TankCamera camera;
         public TankDustFX dustFX;
         public TankHitboxes hitboxes;
         public TankMainGun mainGun;
         public TankMover mover;
 
-        public TankControllerType controlledBy = TankControllerType.AI;
+        public TankControllerType controlledBy;
 
         // Info for tankMover
         private TankMove tankMove = new TankMove();
@@ -31,30 +32,40 @@ namespace Tank
 
         //public float speedNormalized = 0f;
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-
-            //mainGun = GetComponentInChildren<TankMainGun>();
-            //mover = GetComponent<TankMover>();
-            /*if (mover == null) {
-                Debug.LogError("WTF");
-            }*/
+            if (controlledBy == TankControllerType.Player) {
+            } else {
+            }
         }
 
         private void Start()
         {
-            if (controlledBy == TankControllerType.Player) {
-                GameMaster.playerTank = this;
-                controllerPlayer.enabled = true;
-            } else {
-                controllerAI.enabled = true;
-            }
             tankGun = mainGun.gameObject;
+        }
+
+        public override void InitController(ControllableBy controllerType)
+        {
+            switch (controllerType) {
+                case ControllableBy.Player:
+                    controller = gameObject.AddComponent<TankControllerPlayer>();
+                    camera = gameObject.AddComponent<TankCamera>();
+                    GameMaster.playerTank = this;
+                    break;
+                case ControllableBy.AI:
+                    controller = gameObject.AddComponent<TankControllerAI>();
+                    break;
+                case ControllableBy.None:
+                    break;
+                default:
+                    controller = gameObject.AddComponent<TankControllerAI>();
+                    break;
+            }
         }
 
         private void Update()
         {
+            // TODO: Need to optimize
             mover.MoveOrder(tankMove);
             tankMove.Clear();
             mover.LookOrder(tankLook);

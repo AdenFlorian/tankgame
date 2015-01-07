@@ -7,11 +7,10 @@ namespace Tank
     {
         public GameObject shellExplosionPrefab;
         private Vector3 launchPosition;
-        private bool launched = false;
         //private float distanceTraveled = 0f;
         private float distanceFromLaunch = 0f;
         private float armDistance = 5f;
-        private bool armed = false;
+        private TankShellState shellState = TankShellState.Pooled;
 
         private void Start()
         {
@@ -23,33 +22,45 @@ namespace Tank
 
         protected void FixedUpdate()
         {
-            if (launched) {
-                distanceFromLaunch = (transform.position - launchPosition).magnitude;
-            }
-
-            if (distanceFromLaunch > armDistance) {
-                armed = true;
+            switch (shellState) {
+                case TankShellState.Launched:
+                    distanceFromLaunch = (transform.position - launchPosition).magnitude;
+                    if (distanceFromLaunch > armDistance) {
+                        shellState = TankShellState.Armed;
+                    }
+                    break;
+                case TankShellState.Armed:
+                    distanceFromLaunch = (transform.position - launchPosition).magnitude;
+                    break;
+                default:
+                    break;
             }
         }
 
         public void Launch()
         {
-            launched = true;
+            shellState = TankShellState.Launched;
             launchPosition = transform.position;
         }
 
         private void OnCollisionEnter(Collision collision)
         {
             Debug.Log("Shell collided with: " + collision.transform.name);
-            if (armed) {
-                Explode();
-            } else {
-                Dud();
+            switch (shellState) {
+                case TankShellState.Launched:
+                    Dud();
+                    break;
+                case TankShellState.Armed:
+                    Explode();
+                    break;
+                default:
+                    break;
             }
         }
 
         private void Explode()
         {
+            shellState = TankShellState.Exploded;
             GameObject newExplosionGO = GameObject.Instantiate(shellExplosionPrefab, transform.position, transform.rotation) as GameObject;
             Destroy(newExplosionGO, 5f);
             SendToPool();
@@ -57,6 +68,7 @@ namespace Tank
 
         private void Dud()
         {
+            shellState = TankShellState.Dudded;
             rigidbody.velocity = Vector3.zero;
             StartCoroutine("DelayedSendToPool");
         }
@@ -70,13 +82,22 @@ namespace Tank
         private void SendToPool()
         {
             launchPosition = Vector3.zero;
-            launched = false;
             //distanceTraveled = 0f;
             distanceFromLaunch = 0f;
-            armed = false;
             transform.parent = AmmoPool.Instance.transform;
+            shellState = TankShellState.Pooled;
             rigidbody.isKinematic = true;
             gameObject.SetActive(false);
+        }
+
+        private enum TankShellState
+        {
+            Loaded,
+            Launched,
+            Armed,
+            Exploded,
+            Dudded,
+            Pooled
         }
     }
 }

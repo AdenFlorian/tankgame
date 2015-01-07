@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Actor : MonoBehaviour
+public abstract class Actor : MonoBehaviour
 {
+    protected bool isSpawned = false;
     public int actorID { get; private set; }
 
     private static int nextID = 1;
 
-    protected virtual void Awake()
+    public void OnSpawn()
     {
         actorID = Actor.nextID++;
+        isSpawned = true;
+    }
+
+    public virtual void InitController(ControllableBy controllerType)
+    {
     }
 }

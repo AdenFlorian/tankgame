@@ -8,7 +8,7 @@ namespace Tank
         private void Start()
         {
             //Get all hitboxes attached to tank
-            Debug.Log(gameObject.GetComponentsInChildren<Collider>().Length);
+            //Debug.Log(gameObject.GetComponentsInChildren<Collider>().Length);
         }
 
         private void Update()

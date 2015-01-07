@@ -15,8 +15,6 @@ namespace Tank
 
             var nameField = GetType().Name.Replace("Tank", "");
             nameField = nameField[0].ToString().ToLower()[0] + nameField.Substring(1);
-            Debug.Log(nameField);
-            Debug.Log(this);
 
             // Sets the field for this component in the tank object equal to this component
             typeof(Tank).GetField(nameField).SetValue(tank, this);

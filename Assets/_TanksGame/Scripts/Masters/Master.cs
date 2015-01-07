@@ -9,10 +9,13 @@ public class Master
 
     public static MenuMaster menuMaster { get; protected set; }
 
+    public static SpawnMaster spawnMaster { get; protected set; }
+
     public static void Begin()
     {
         gameMaster = new GameMaster();
         inputMaster = new InputMaster();
         menuMaster = new MenuMaster();
+        spawnMaster = new SpawnMaster();
     }
 }

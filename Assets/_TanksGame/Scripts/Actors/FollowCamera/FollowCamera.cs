@@ -18,16 +18,18 @@ public class FollowCamera : Actor
 
     private void LateUpdate()
     {
-        if (follow) {
-            Follow();
-        }
-        if (lookAt) {
-            transform.LookAt(target.position);
-            transform.Rotate(-desiredAngleOffset, 0f, 0f);
+        if (target != null) {
+            if (follow) {
+                Move();
+            }
+            if (lookAt) {
+                transform.LookAt(target.position);
+                transform.Rotate(-desiredAngleOffset, 0f, 0f);
+            }
         }
     }
 
-    private void Follow()
+    private void Move()
     {
         // Desired position equals the position vector
         // moved a certain distance
@@ -38,5 +40,10 @@ public class FollowCamera : Actor
         Vector3 multipliedBackVector = normBackVector * desiredDistance;
         desiredPosition = target.position + multipliedBackVector;
         transform.position = desiredPosition;
+    }
+
+    public void Follow(Transform followTarget)
+    {
+        target = followTarget;
     }
 }
