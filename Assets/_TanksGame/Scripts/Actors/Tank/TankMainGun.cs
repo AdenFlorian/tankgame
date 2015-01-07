@@ -31,7 +31,7 @@ namespace Tank
                 loadedShell.rigidbody.isKinematic = false;
                 loadedShell.transform.parent = null;
                 loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.Impulse);
-                //loadedShell.rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.Impulse);
+                loadedShell.rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.Impulse);
                 loadedShell.GetComponent<TankShell>().Launch();
                 loadedShell = null;
                 animation.Play();

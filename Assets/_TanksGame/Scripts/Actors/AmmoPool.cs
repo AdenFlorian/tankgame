@@ -7,7 +7,7 @@ public class AmmoPool : MonoBehaviour
 
     public GameObject tankShellPrefab;
 
-    public uint poolSize = 5;
+    public uint poolSize = 50;
 
     private GameObject[] tankShellPool;
 

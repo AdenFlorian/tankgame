@@ -6,21 +6,21 @@ namespace Tank
     public class TankMover : TankComponent
     {
         // Max values
-        [Range(0, 1)]
-        public float maxForward = 1f;
-        [Range(0, 0.5f)]
-        public float maxBackward = 2f;
-        [Range(0, 4)]
-        public float maxTurnRate = 1f;
+        //[Range(0, 1)]
+        public float maxForward = 5f;
+        //[Range(0, 0.5f)]
+        public float maxBackward = 2.5f;
+        //[Range(0, 4)]
+        public float maxTurnRate = 100f;
 
         // Acceleration values
-        public float accelForward = 0.5f;
-        public float accelBackward = 0.5f;
-        public float accelTurn = 1f;
+        public float accelForward = 5f;
+        public float accelBackward = 2.5f;
+        public float accelTurn = 200f;
 
         // Friction Values
-        public float frictionTurn = 1.5f;
-        public float frictionforward = 0.5f;
+        public float frictionTurn = 300f;
+        public float frictionforward = 4.5f;
 
         // Current values
         public float currentForwardSpeed = 0f;
@@ -46,9 +46,9 @@ namespace Tank
 
         private void Update()
         {
-            transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed));
+            transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed) * Time.deltaTime);
 
-            transform.Rotate(0f, currentTurnRate, 0f, Space.Self);
+            transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
         }
 
         public void LookOrder(TankLook tankLook)
