@@ -1,23 +1,16 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿
+public abstract class TankComponent : ActorComponent {
+	protected Tank tank;
 
-namespace Tank
-{
-    public abstract class TankComponent : ActorComponent
-    {
-        protected Tank tank;
+	protected override void Awake() {
+		base.Awake();
 
-        protected override void Awake()
-        {
-            base.Awake();
+		tank = actor as Tank;
 
-            tank = actor as Tank;
+		var nameField = GetType().Name.Replace("Tank", "");
+		nameField = nameField[0].ToString().ToLower()[0] + nameField.Substring(1);
 
-            var nameField = GetType().Name.Replace("Tank", "");
-            nameField = nameField[0].ToString().ToLower()[0] + nameField.Substring(1);
-
-            // Sets the field for this component in the tank object equal to this component
-            typeof(Tank).GetField(nameField).SetValue(tank, this);
-        }
-    }
+		// Sets the field for this component in the tank object equal to this component
+		typeof(Tank).GetField(nameField).SetValue(tank, this);
+	}
 }

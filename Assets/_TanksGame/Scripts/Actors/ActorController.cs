@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class ActorController : MonoBehaviour
-{
+public abstract class ActorController : MonoBehaviour {
 }

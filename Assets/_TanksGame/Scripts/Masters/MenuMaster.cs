@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MenuMaster : Master
-{
-    public MenuMaster()
-    {
-        Debug.Log(GetType().Name + " Loaded!");
-    }
+public class MenuMaster : Master {
+	public MenuMaster() {
+		Debug.Log(GetType().Name + " Loaded!");
+	}
 }

@@ -1,148 +1,131 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Tank
-{
-    public enum TankControllerType
-    {
-        Player,
-        AI
-    }
+public enum TankControllerType {
+	Player,
+	AI
+}
 
-    public class Tank : Actor
-    {
-        public GameObject tankTop;
-        public GameObject tankGun { get; private set; }
+public class Tank : Actor {
+	public GameObject tankTop;
+	public GameObject tankGun { get; private set; }
 
-        public TankController controller;
+	public TankController controller;
 
-        // Tank Components
-        public new TankAudio audio;
-        public new TankCamera camera;
-        public TankDustFX dustFX;
-        public TankHitboxes hitboxes;
-        public TankMainGun mainGun;
-        public TankMover mover;
+	// Tank Components
+	public new TankAudio audio;
+	public new TankCamera camera;
+	public TankDeath death;
+	public TankDustFX dustFX;
+	public TankHealth health;
+	public TankMainGun mainGun;
+	public TankMover mover;
 
-        public TankControllerType controlledBy;
+	public TankControllerType controlledBy;
 
-        // Info for tankMover
-        private TankMove tankMove = new TankMove();
-        private TankLook tankLook = new TankLook();
+	// Info for tankMover
+	private TankMove tankMove = new TankMove();
+	private TankLook tankLook = new TankLook();
 
-        //public float speedNormalized = 0f;
+	//public float speedNormalized = 0f;
 
-        protected void Awake()
-        {
-            if (controlledBy == TankControllerType.Player) {
-            } else {
-            }
-        }
+	protected void Awake() {
+	}
 
-        private void Start()
-        {
-            tankGun = mainGun.gameObject;
-        }
+	private void Start() {
+		tankGun = mainGun.gameObject;
+	}
 
-        public override void InitController(ControllableBy controllerType)
-        {
-            switch (controllerType) {
-                case ControllableBy.Player:
-                    controller = gameObject.AddComponent<TankControllerPlayer>();
-                    camera = gameObject.AddComponent<TankCamera>();
-                    GameMaster.playerTank = this;
-                    break;
-                case ControllableBy.AI:
-                    controller = gameObject.AddComponent<TankControllerAI>();
-                    break;
-                case ControllableBy.None:
-                    break;
-                default:
-                    controller = gameObject.AddComponent<TankControllerAI>();
-                    break;
-            }
-        }
+	public override void InitController(ControllableBy controllerType) {
+		switch (controllerType) {
+			case ControllableBy.Player:
+				controller = gameObject.AddComponent<TankControllerPlayer>();
+				camera = gameObject.AddComponent<TankCamera>();
+				GameMaster.playerTank = this;
+				break;
+			case ControllableBy.AI:
+				controller = gameObject.AddComponent<TankControllerAI>();
+				break;
+			case ControllableBy.Empty:
+				break;
+			default:
+				controller = gameObject.AddComponent<TankControllerAI>();
+				break;
+		}
+	}
 
-        private void Update()
-        {
-            // TODO: Need to optimize
-            mover.MoveOrder(tankMove);
-            tankMove.Clear();
-            mover.LookOrder(tankLook);
-            tankLook.Clear();
-        }
+	private void Update() {
+		// TODO: Need to optimize
+		mover.MoveOrder(tankMove);
+		tankMove.Clear();
+		mover.LookOrder(tankLook);
+		tankLook.Clear();
+	}
 
-        public void MoveForward()
-        {
-            tankMove.forth = true;
-        }
+	public void MoveForward() {
+		tankMove.forth = true;
+	}
 
-        public void MoveBackward()
-        {
-            tankMove.back = true;
-        }
+	public void MoveBackward() {
+		tankMove.back = true;
+	}
 
-        public void TurnLeft()
-        {
-            tankMove.left = true;
-        }
+	public void TurnLeft() {
+		tankMove.left = true;
+	}
 
-        public void TurnRight()
-        {
-            tankMove.right = true;
-        }
+	public void TurnRight() {
+		tankMove.right = true;
+	}
 
-        public void LookHorizontal(float input)
-        {
-            tankLook.x = input;
-        }
+	public void LookHorizontal(float input) {
+		tankLook.x = input;
+	}
 
-        public void LookVertical(float input)
-        {
-            tankLook.y = input;
-        }
+	public void LookVertical(float input) {
+		tankLook.y = input;
+	}
 
-        public void Fire()
-        {
-            mainGun.Fire();
-        }
-    }
+	public void Fire() {
+		mainGun.Fire();
+	}
+	public override void Damage(float amount) {
+		health.Damage(amount);
+	}
+	public void OnZeroHP() {
+		mainGun.OnActorDeath();
+		// death script to be called last, as it destroys the gameobject
+		death.Die();
+	}
+}
 
-    public class TankMove
-    {
-        public TankMove()
-        {
-            Clear();
-        }
+public class TankMove {
+	public TankMove() {
+		Clear();
+	}
 
-        public bool forth;
-        public bool back;
-        public bool left;
-        public bool right;
+	public bool forth;
+	public bool back;
+	public bool left;
+	public bool right;
 
-        public void Clear()
-        {
-            forth = false;
-            back = false;
-            left = false;
-            right = false;
-        }
-    }
+	public void Clear() {
+		forth = false;
+		back = false;
+		left = false;
+		right = false;
+	}
+}
 
-    public class TankLook
-    {
-        public TankLook()
-        {
-            Clear();
-        }
+public class TankLook {
+	public TankLook() {
+		Clear();
+	}
 
-        public float x;
-        public float y;
+	public float x;
+	public float y;
 
-        public void Clear()
-        {
-            x = 0f;
-            y = 0f;
-        }
-    }
+	public void Clear() {
+		x = 0f;
+		y = 0f;
+	}
 }
