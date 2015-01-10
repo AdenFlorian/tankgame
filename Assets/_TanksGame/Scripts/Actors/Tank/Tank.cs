@@ -35,17 +35,17 @@ public class Tank : Actor {
 		tankGun = mainGun.gameObject;
 	}
 
-	public override void InitController(ControllableBy controllerType) {
+	public override void InitController(ControlledBy controllerType) {
 		switch (controllerType) {
-			case ControllableBy.Player:
+			case ControlledBy.Player:
 				controller = gameObject.AddComponent<TankControllerPlayer>();
 				camera = gameObject.AddComponent<TankCamera>();
-				GameMaster.playerTank = this;
+				//GameMaster.playerTank = this;
 				break;
-			case ControllableBy.AI:
+			case ControlledBy.AI:
 				controller = gameObject.AddComponent<TankControllerAI>();
 				break;
-			case ControllableBy.Empty:
+			case ControlledBy.Empty:
 				break;
 			default:
 				controller = gameObject.AddComponent<TankControllerAI>();
@@ -93,6 +93,7 @@ public class Tank : Actor {
 	}
 	public void OnZeroHP() {
 		mainGun.OnActorDeath();
+		Master.missionMaster.ReportActorEvent(this, MissionEvent.ActorDeath);
 		// death script to be called last, as it destroys the gameobject
 		death.Die();
 	}

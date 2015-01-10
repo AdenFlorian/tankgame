@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class TankShell : MonoBehaviour {
+public class ArtilleryShell : MonoBehaviour {
 	public GameObject shellExplosionPrefab;
 	private Vector3 launchPosition;
 	//private float distanceTraveled = 0f;
@@ -38,7 +38,7 @@ public class TankShell : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision collision) {
-		Debug.Log("Shell collided with: " + collision.transform.name);
+		//Debug.Log("Shell collided with: " + collision.transform.name);
 		switch (shellState) {
 			case TankShellState.Launched:
 				//Dud();

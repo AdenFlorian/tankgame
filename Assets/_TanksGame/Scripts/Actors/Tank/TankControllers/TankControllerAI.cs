@@ -15,7 +15,7 @@ public class TankControllerAI : TankController {
 	public bool pointedTowardsNextWaypoint = false;
 
 	private void Start() {
-		nextWaypoint = GameMaster.playerTank.transform;
+		nextWaypoint = GameObject.FindGameObjectWithTag("playerTank").transform;
 	}
 
 	private void Update() {

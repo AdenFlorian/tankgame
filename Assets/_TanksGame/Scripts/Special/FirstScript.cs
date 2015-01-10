@@ -9,6 +9,6 @@ public class FirstScript : MonoBehaviour {
 	}
 
 	private void Update() {
-		Master.gameMaster.Update();
+		Master.StartMasterUpdate();
 	}
 }
