@@ -1,6 +1,11 @@
 ﻿
 public class TankControllerPlayer : TankController {
-	private void Update() {
+
+	public TankControllerPlayer(Tank tank)
+		: base(tank) {
+	}
+
+	protected override void ControllerUpdate() {
 		// Actions
 		if (ActionMaster.GetAction(ActionCode.MoveForward)) {
 			tank.MoveForward();

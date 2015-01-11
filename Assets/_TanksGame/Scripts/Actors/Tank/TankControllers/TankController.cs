@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
 public class TankController : ActorController {
+
 	protected Tank tank;
 
-	protected virtual void Awake() {
-		tank = GetComponent<Tank>();
-		if (tank == null) {
-			Debug.LogError("TankController without a Tank!");
-		}
+	public TankController(Tank tank)
+		: base(tank) {
+		this.tank = tank;
 	}
 }

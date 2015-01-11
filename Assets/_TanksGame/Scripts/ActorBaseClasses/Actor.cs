@@ -12,10 +12,7 @@ public abstract class Actor : MonoBehaviour {
 
 	}
 
-	public virtual void InitController(ControlledBy controllerType) {
-	}
+	public virtual void InitController(ControlledBy controllerType) { }
 
-	public virtual void Damage(float amount) {
-
-	}
+	public virtual void Damage(float amount) { }
 }

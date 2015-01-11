@@ -26,8 +26,6 @@ public class Tank : Actor {
 	private TankMove tankMove = new TankMove();
 	private TankLook tankLook = new TankLook();
 
-	//public float speedNormalized = 0f;
-
 	protected void Awake() {
 	}
 
@@ -38,19 +36,21 @@ public class Tank : Actor {
 	public override void InitController(ControlledBy controllerType) {
 		switch (controllerType) {
 			case ControlledBy.Player:
-				controller = gameObject.AddComponent<TankControllerPlayer>();
+				controller = new TankControllerPlayer(this);
 				camera = gameObject.AddComponent<TankCamera>();
 				//GameMaster.playerTank = this;
 				break;
 			case ControlledBy.AI:
-				controller = gameObject.AddComponent<TankControllerAI>();
+				controller = new TankControllerAI(this);
 				break;
 			case ControlledBy.Empty:
+				controller = new TankController(this);
 				break;
 			default:
-				controller = gameObject.AddComponent<TankControllerAI>();
+				controller = new TankControllerAI(this);
 				break;
 		}
+		System.Diagnostics.Debug.Assert(controller != null);
 	}
 
 	private void Update() {
@@ -96,6 +96,12 @@ public class Tank : Actor {
 		Master.missionMaster.ReportActorEvent(this, MissionEvent.ActorDeath);
 		// death script to be called last, as it destroys the gameobject
 		death.Die();
+	}
+
+	void OnDestroy() {
+		//Debug.Log(this.actorID);
+		controller.OnActorDeath();
+		controller = null;
 	}
 }
 

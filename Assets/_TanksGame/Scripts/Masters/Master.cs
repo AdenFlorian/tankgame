@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract partial class Master {
 
 	public static ActionMaster actionMaster { get; protected set; }
+	public static ControllerMaster controllerMaster { get; protected set; }
 	public static GameMaster gameMaster { get; protected set; }
 	public static InputMaster inputMaster { get; protected set; }
 	public static MenuMaster menuMaster { get; protected set; }
@@ -17,6 +18,8 @@ public abstract partial class Master {
 	public static void Begin() {
 		actionMaster = new ActionMaster();
 		masters.Add(actionMaster);
+		controllerMaster = new ControllerMaster();
+		masters.Add(controllerMaster);
 		gameMaster = new GameMaster();
 		masters.Add(gameMaster);
 		inputMaster = new InputMaster();
@@ -42,6 +45,5 @@ public abstract partial class Master {
 		}
 	}
 
-	protected virtual void MasterUpdate() {
-	}
+	protected virtual void MasterUpdate() { }
 }

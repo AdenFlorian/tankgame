@@ -14,11 +14,12 @@ public class TankControllerAI : TankController {
 
 	public bool pointedTowardsNextWaypoint = false;
 
-	private void Start() {
+	public TankControllerAI(Tank tank)
+		: base(tank) {
 		nextWaypoint = GameObject.FindGameObjectWithTag("playerTank").transform;
 	}
 
-	private void Update() {
+	protected override void ControllerUpdate() {
 		distanceVector = nextWaypoint.position - tank.transform.position;
 		distanceToWaypoint = distanceVector.magnitude;
 		worldSpaceForwardVector = tank.transform.localToWorldMatrix.MultiplyVector(Vector3.forward);

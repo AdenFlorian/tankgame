@@ -17,9 +17,7 @@ public abstract class ActorComponent : MonoBehaviour {
 		}
 	}
 
-	public virtual void OnActorDeath() {
-
-	}
+	public virtual void OnActorDeath() { }
 }
 
 [System.Serializable]
