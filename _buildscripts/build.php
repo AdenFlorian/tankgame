@@ -6,6 +6,7 @@
 // **Need unity editor in PATH**
 
 $projectPath = dirname(getcwd()); // Gets parent directory full path
+$projectName = basename($projectPath);
 
 $buildNumFile = "nextbuildnumber";
 $buildNum = file_get_contents($buildNumFile);
@@ -14,15 +15,17 @@ echo "Build Number " . $buildNum . "\n";
 
 file_put_contents($buildNumFile, $buildNum + 1);
 
-$buildPath = '"Builds\\' . $buildNum . '\\WebPlayer"';
+$buildNumPath = 'Builds/' . $buildNum;
+$buildWebPath = $buildNumPath . '/WebPlayer';
+$buildWinx86Path = $buildNumPath . '/Windows_x86/' . $projectName . '.exe';
 
 exec("taskkill /im Unity.exe");
-exec("sleep 1");
-exec("Unity -batchmode -nographics -quit -buildWebPlayer " . $buildPath . ' -projectPath "' . $projectPath . '"');
+exec("sleep 2"); // Give Unity a chance to close
+exec('Unity -batchmode -nographics -quit -buildWebPlayer "' . $buildWebPath . '" -buildWindowsPlayer "' . $buildWinx86Path . '" -projectPath "' . $projectPath . '"');
 
-echo "Built to " . $buildPath;
+echo "Built to " . $buildNumPath . PHP_EOL;
 
-exec("copy " . $buildPath .  " " . $buildPath);
+//exec("copy " . $buildWebPath .  " " . $buildWebPath);
 exec("toast \"Build " . $buildNum . " has finished!\"");
 
 echo "Build finished!\n";

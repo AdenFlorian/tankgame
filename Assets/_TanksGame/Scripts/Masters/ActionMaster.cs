@@ -1,45 +1,45 @@
-﻿/*
- * Bamboo.bb_InputManager
- * To use, call one of the three 'InputFunctions'; They work similar to unity's input class
- * To make your own actions, add them to the InputActionEnum and set it equal to a valid InputCode integer (see InputCode enum)
- * Users can change the keys for actions in \Bamboo\Keybindings\Keybindings.txt (This path can be changed at keybindingsFileLocation)
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 /// <summary>
+/// Responsible for mapping ActionCodes to bb_KeyCodes and repsonding to requests for action states
 /// Utilizes UnityEngine.Input, but allows for custom actions that can be modified at runtime
+/// To use, call one of the three 'InputFunctions'; They work similar to Unity's Input class
+/// To make your own actions, add them to the ActionCode enum
+/// Set default keys in AddDefaultKeyCodes()
+/// Users can change the keys for actions in \Bamboo\Keybindings\Keybindings.txt (This path can be changed at configLocalPath)
+/// All actions will be written to the config, whether they have a default keycode or not
 /// </summary>
 public class ActionMaster : Master {
-	private static string configLocalPath = @"\Bamboo\Config\KeyBindings.txt";
-	private static string configFullPath;
+	private string configPath;
 
-	// Holds the default keys for all the actions
-	//Dictionary<ActionCode, List<bb_KeyCode>> defaultKeysDict = new Dictionary<ActionCode, List<bb_KeyCode>>();
-	// Holds the current keybindings for all the actions
-	private static Dictionary<ActionCode, List<bb_KeyCode>> currentKeysDict = new Dictionary<ActionCode, List<bb_KeyCode>>();
+	// Holds the bb_KeyCodes for each ActionCode
+	private Dictionary<ActionCode, List<bb_KeyCode>> keyCodesFor = new Dictionary<ActionCode, List<bb_KeyCode>>();
 
-	private static List<ActionCode> missingActionCodes = new List<ActionCode>();
+	private List<ActionCode> missingActionCodes = new List<ActionCode>();
 
-	public ActionMaster() {
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="relativeCfgFilePath">Path to keybindings config file relative to Application.dataPath (Assets folder)</param>
+	public ActionMaster(string relativeCfgFilePath = @"Config/KeyBindings.txt") {
+		configPath = Application.dataPath + "/" + relativeCfgFilePath;
 		Init();
 	}
 
 	private void Init() {
-		// Sets the path to the keybindsConfig
-		configFullPath = Application.dataPath + configLocalPath;
-
-		// Fill defaultKeys with the ActionCodes and empty KeyCode Lists
-		FillDefaultKeysWithEnums();
+		// Fill currentKeysDict with ActionCodes and empty KeyCode Lists
+		FillCurrentKeysWithEnum();
 
 		// Add some default keys
-		AddDefaultKeysToDefaultKeysDict();
+		AddDefaultKeyCodes();
 
-		// Check for current key config
-		if (File.Exists(configFullPath)) {
+#if !UNITY_WEBPLAYER
+		// Check for current key config file
+		if (File.Exists(configPath)) {
 			Debug.Log("Keybindings.txt found! Reading config into keys dictionary...");
 
 			// Fill current keys dict by reading current keybinds config file
@@ -47,45 +47,34 @@ public class ActionMaster : Master {
 		} else {
 			Debug.Log("Keybindings.txt NOT found! Generating config from default keys...");
 
-			// Generate keybinds config from defaultKeysDict if missing
-			WriteDictToConfig(currentKeysDict);
+			// Create Config folder if doesn't exist
+			Directory.CreateDirectory(Path.GetDirectoryName(configPath));
 
-			// Fills currentKeysDict with default keys
-			ResetAllActionsToDefaultKeys();
+			// Generate keybinds config
+			WriteDictToConfig(keyCodesFor);
 		}
-
-		//initialized = true;
-		Debug.Log("bb_Input initialized");
+#endif
 	}
 
 	#region Dictionary Methods
 
 	/// <summary>
-	/// Resets the given action's keyList to the default key
+	/// Clears keys for given action
 	/// </summary>
-	/// <param name="action">The InputAction to reset to default</param>
-	public static void ResetActionToDefaultKeys(ActionCode action) {
-		List<bb_KeyCode> tempList = new List<bb_KeyCode>();
-
-		tempList.Add((bb_KeyCode)((int)action));
-
-		currentKeysDict[action] = tempList;
+	/// <param name="action">The action to clear</param>
+	public void ClearAction(ActionCode action) {
+		keyCodesFor[action].Clear();
 	}
 
 	/// <summary>
-	/// Copies defaultKeysDict to currentKeysDict effectively resetting all actions to the default keys
+	/// Resets keymappings to defaults
 	/// </summary>
-	public static void ResetAllActionsToDefaultKeys() {
-		currentKeysDict.Clear();
+	public void ResetAllActionsToDefaultKeys() {
+		keyCodesFor.Clear();
 
-		FillDefaultKeysWithEnums();
+		FillCurrentKeysWithEnum();
 
-		AddDefaultKeysToDefaultKeysDict();
-
-		/*
-		foreach (var item in defaultKeysDict) {
-			currentKeysDict.Add(item.Key, item.Value);
-		}*/
+		AddDefaultKeyCodes();
 	}
 
 	/// <summary>
@@ -93,7 +82,7 @@ public class ActionMaster : Master {
 	/// </summary>
 	/// <param name="action">InputAction to modify</param>
 	/// <param name="keyList">List of InputCodes to assign to the given InputAction</param>
-	public static void BindKeyToAction(ActionCode action, params bb_KeyCode[] inputKeys) {
+	public void BindKeyToAction(ActionCode action, params bb_KeyCode[] inputKeys) {
 		List<bb_KeyCode> tempList = new List<bb_KeyCode>();
 
 		foreach (var item in inputKeys) {
@@ -101,43 +90,42 @@ public class ActionMaster : Master {
 		}
 
 		// Change keyList for given action in the current keybindings dictionary
-		currentKeysDict[action] = tempList;
+		keyCodesFor[action] = tempList;
 	}
 
-	// Fills defaultKeys with action codes and empty key lists
-	private static void FillDefaultKeysWithEnums() {
+	/// <summary>
+	/// Fills currentKeysDict with action codes and empty key lists
+	/// </summary>
+	private void FillCurrentKeysWithEnum() {
 		ActionCode[] values = (ActionCode[])Enum.GetValues(typeof(ActionCode));
 
 		foreach (ActionCode action in values) {
 			List<bb_KeyCode> tempList1 = new List<bb_KeyCode>();
 
-			currentKeysDict.Add(action, tempList1);
-
-			//defaultKeysDict.Add(action, tempList1);
+			keyCodesFor.Add(action, tempList1);
 
 			missingActionCodes.Add(action);
 		}
 	}
 
-	// Adds default keys manually
-	private static void AddDefaultKeysToDefaultKeysDict() {
-		// **WEAPON** //
-		currentKeysDict[ActionCode.PrimaryFire].Add(bb_KeyCode.Mouse0);
-		currentKeysDict[ActionCode.SecondaryFire].Add(bb_KeyCode.Mouse1);
+	private void AddDefaultKeyCodes() {
+		// Weapon Actions
+		keyCodesFor[ActionCode.PrimaryFire].Add(bb_KeyCode.Mouse0);
+		keyCodesFor[ActionCode.SecondaryFire].Add(bb_KeyCode.Mouse1);
 
-		// **MOVEMENT** //
-		currentKeysDict[ActionCode.MoveForward].Add(bb_KeyCode.W);
-		currentKeysDict[ActionCode.MoveBackward].Add(bb_KeyCode.S);
-		currentKeysDict[ActionCode.TurnLeft].Add(bb_KeyCode.A);
-		currentKeysDict[ActionCode.TurnRight].Add(bb_KeyCode.D);
+		// Movement Actions
+		keyCodesFor[ActionCode.MoveForward].Add(bb_KeyCode.W);
+		keyCodesFor[ActionCode.MoveBackward].Add(bb_KeyCode.S);
+		keyCodesFor[ActionCode.TurnLeft].Add(bb_KeyCode.A);
+		keyCodesFor[ActionCode.TurnRight].Add(bb_KeyCode.D);
 	}
 
 	#endregion Dictionary Methods
 
 	#region ConfigFunctions
 
-	private static void WriteDictToConfig(Dictionary<ActionCode, List<bb_KeyCode>> dict) {
-		using (StreamWriter config = new StreamWriter(configFullPath, false)) {
+	private void WriteDictToConfig(Dictionary<ActionCode, List<bb_KeyCode>> dict) {
+		using (StreamWriter config = new StreamWriter(configPath, false)) {
 			config.WriteLine("# Commented lines start with a '#'");
 			config.WriteLine("# Put action name on left of '='");
 			config.WriteLine("# Put inputs on left side of '=' and multiple inputs separated by commas ','");
@@ -159,10 +147,10 @@ public class ActionMaster : Master {
 	}
 
 	// Returns a dictionary filled with bindings read from path
-	private static void ReadConfigToDict() {
+	private void ReadConfigToDict() {
 		//currentKeysDict.Clear();
 
-		string[] lines = System.IO.File.ReadAllLines(configFullPath);
+		string[] lines = System.IO.File.ReadAllLines(configPath);
 		string[] codes;
 
 		for (int i = 0; i < lines.Length; i++) {
@@ -203,15 +191,15 @@ public class ActionMaster : Master {
 			}
 
 			// add the input code list to the existing action
-			currentKeysDict[action] = workingInputCodeList;
+			keyCodesFor[action] = workingInputCodeList;
 		}
 
 		RewriteConfig(lines);
 	}
 
-	private static void RewriteConfig(string[] linesToWrite) {
+	private void RewriteConfig(string[] linesToWrite) {
 		// Opens keybinds config file
-		using (StreamWriter configWriter = new StreamWriter(configFullPath, false)) {
+		using (StreamWriter configWriter = new StreamWriter(configPath, false)) {
 			foreach (string line in linesToWrite) {
 				if (line.Length > 1) {
 					configWriter.WriteLine(line);
@@ -228,144 +216,60 @@ public class ActionMaster : Master {
 
 	#region InputFunctions
 
-	/// <summary>
-	///
-	/// </summary>
-	/// <param name="action"></param>
-	/// <returns></returns>
-	public static bool GetActionDown(ActionCode action) {
-		if (!currentKeysDict.ContainsKey(action)) {
-			Debug.LogError(action + " is not a valid action name");
-			return false;
-		}
+	enum InputState {
+		Up,
+		Down,
+		Any
+	}
 
-		bool isActionDown = false;
+	public bool GetActionDown(ActionCode action) {
+		return GetAction(action, InputState.Down);
+	}
 
-		foreach (bb_KeyCode inputCode in currentKeysDict[action]) {
-			int enumint = (int)inputCode;
+	public bool GetActionUp(ActionCode action) {
+		return GetAction(action, InputState.Up);
+	}
 
-			if (enumint < 430) {
-				if (enumint > 322 && enumint < 330) {
-					isActionDown = Input.GetMouseButtonDown(enumint - 323);
+	public bool GetAction(ActionCode action) {
+		return GetAction(action, InputState.Any);
+	}
+
+	private bool GetAction(ActionCode action, InputState state) {
+		foreach (bb_KeyCode keyCode in keyCodesFor[action]) {
+			KeyCode unityKeyCode = (KeyCode)keyCode;
+			if ((int)keyCode < 1000) {
+				if (state == InputState.Any && Input.GetKey(unityKeyCode)) {
+					return true;
+				} else if (state == InputState.Up && Input.GetKeyUp(unityKeyCode)) {
+					return true;
+				} else if (state == InputState.Down && Input.GetKeyDown(unityKeyCode)) {
+					return true;
 				}
-
-				isActionDown = Input.GetKeyDown((KeyCode)(int)enumint);
-			} else if (enumint == 430) {
+			} else if (keyCode == bb_KeyCode.MouseScrollUp) {
 				if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-					isActionDown = true;
+					return true;
 				}
-			} else {
+			} else if (keyCode == bb_KeyCode.MouseScrollDown) {
 				if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-					isActionDown = true;
+					return true;
 				}
-			}
-
-			// Returns if true to keep foreach loop from running longer than it has to
-			if (isActionDown == true) {
-				return true;
 			}
 		}
 
-		// Should return false if it reaches this point
-		return isActionDown;
+		return false;
 	}
 
-	/// <summary>
-	///
-	/// </summary>
-	/// <param name="action"></param>
-	/// <returns></returns>
-	public static bool GetActionUp(ActionCode action) {
-		if (!currentKeysDict.ContainsKey(action)) {
-			Debug.LogError(action + " is not a valid action name");
-			return false;
-		}
-
-		bool isActionUp = false;
-
-		foreach (bb_KeyCode inputCode in currentKeysDict[action]) {
-			int enumint = (int)inputCode;
-
-			if (enumint < 430) {
-				if (enumint > 322 && enumint < 330) {
-					isActionUp = Input.GetMouseButtonUp(enumint - 323);
-				}
-
-				isActionUp = Input.GetKeyUp((KeyCode)(int)enumint);
-			} else if (enumint == 430) {
-				if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-					isActionUp = true;
-				}
-			} else {
-				if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-					isActionUp = true;
-				}
-			}
-
-			if (isActionUp == true) {
-				return true;
-			}
-		}
-
-		return isActionUp;
-	}
-
-	/// <summary>
-	///
-	/// </summary>
-	/// <param name="action"></param>
-	/// <returns></returns>
-	public static bool GetAction(ActionCode action) {
-		if (currentKeysDict.ContainsKey(action) == false) {
-			Debug.LogError(action + " is not a valid action name");
-			return false;
-		}
-
-		bool isAction = false;
-
-		foreach (bb_KeyCode inputCode in currentKeysDict[action]) {
-			int enumInt = (int)inputCode;
-
-			switch (enumInt) {
-				case 600:
-					if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-						isAction = true;
-					}
-					break;
-				case 601:
-					if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-						isAction = true;
-					}
-					break;
-				default:
-					if (enumInt > 322 && enumInt < 330) {
-						isAction = Input.GetMouseButton(enumInt - 323);
-					}
-					isAction = Input.GetKey((KeyCode)(int)enumInt);
-					break;
-			}
-
-			if (isAction == true) {
-				return true;
-			}
-		}
-
-		return isAction;
-	}
-
-	public static float GetAxis(AxisCode axisCode) {
-		float result = 0f;
-
+	public float GetAxis(AxisCode axisCode) {
 		switch (axisCode) {
 			case AxisCode.LookHorizontal:
-				result = Input.GetAxis("Mouse X");
-				break;
+				return Input.GetAxis("Mouse X");
 			case AxisCode.LookVertical:
-				result = Input.GetAxis("Mouse Y");
-				break;
+				return Input.GetAxis("Mouse Y");
+			default:
+				throw new NotImplementedException(
+					"No case defined for " + axisCode + " in " +
+					MethodBase.GetCurrentMethod().Name);
 		}
-
-		return result;
 	}
 
 	#endregion InputFunctions
@@ -679,8 +583,8 @@ public enum bb_KeyCode {
 	Joystick4Button17 = 427,
 	Joystick4Button18 = 428,
 	Joystick4Button19 = 429,
-	MouseScrollUp = 600,
-	MouseScrollDown = 601
+	MouseScrollUp = 1000,
+	MouseScrollDown = 1001
 }
 
 #endregion Enumerators

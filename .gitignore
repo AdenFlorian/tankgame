@@ -10,6 +10,8 @@
 # Unity assets to ignore (3rd party)
 [Aa]ssets/UnityVS/
 [Aa]ssets/UnityVS.meta
+[Aa]ssets/Config/
+[Aa]ssets/Config.meta
 
 
 

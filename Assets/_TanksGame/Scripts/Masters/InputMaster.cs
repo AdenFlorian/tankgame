@@ -2,8 +2,6 @@
 
 public class InputMaster : Master {
 
-	public bool mouse0 { get; private set; }
-
 	public InputMaster() {
 		Debug.Log(GetType().Name + " Loaded!");
 	}
@@ -13,13 +11,12 @@ public class InputMaster : Master {
 	}
 
 	private void ProcessInput() {
-		if (Input.GetKeyDown(KeyCode.Mouse0)) {
-			if (Screen.lockCursor == false) {
+		if (Screen.lockCursor == false) {
+			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				Screen.lockCursor = true;
-				mouse0 = false;
-			} else {
-				mouse0 = true;
 			}
+		} else if (Input.GetKeyDown(KeyCode.Escape)) {
+			Screen.lockCursor = false;
 		}
 	}
 }
