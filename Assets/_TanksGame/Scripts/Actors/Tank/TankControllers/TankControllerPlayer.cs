@@ -2,24 +2,24 @@
 public class TankControllerPlayer : TankController {
 	private void Update() {
 		// Actions
-		if (InputManager.GetAction(ActionCode.MoveForward)) {
+		if (ActionMaster.GetAction(ActionCode.MoveForward)) {
 			tank.MoveForward();
 		}
-		if (InputManager.GetAction(ActionCode.MoveBackward)) {
+		if (ActionMaster.GetAction(ActionCode.MoveBackward)) {
 			tank.MoveBackward();
 		}
-		if (InputManager.GetAction(ActionCode.TurnLeft)) {
+		if (ActionMaster.GetAction(ActionCode.TurnLeft)) {
 			tank.TurnLeft();
 		}
-		if (InputManager.GetAction(ActionCode.TurnRight)) {
+		if (ActionMaster.GetAction(ActionCode.TurnRight)) {
 			tank.TurnRight();
 		}
-		if (InputManager.GetAction(ActionCode.PrimaryFire)) {
+		if (ActionMaster.GetAction(ActionCode.PrimaryFire)) {
 			tank.Fire();
 		}
 
 		// Axes
-		tank.LookHorizontal(InputManager.GetAxis(AxisCode.LookHorizontal));
-		tank.LookVertical(InputManager.GetAxis(AxisCode.LookVertical));
+		tank.LookHorizontal(ActionMaster.GetAxis(AxisCode.LookHorizontal));
+		tank.LookVertical(ActionMaster.GetAxis(AxisCode.LookVertical));
 	}
 }

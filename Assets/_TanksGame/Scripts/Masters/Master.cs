@@ -3,27 +3,30 @@ using UnityEngine;
 
 public abstract partial class Master {
 
+	public static ActionMaster actionMaster { get; protected set; }
 	public static GameMaster gameMaster { get; protected set; }
 	public static InputMaster inputMaster { get; protected set; }
 	public static MenuMaster menuMaster { get; protected set; }
-	public static SpawnMaster spawnMaster { get; protected set; }
 	public static MissionMaster missionMaster { get; protected set; }
+	public static SpawnMaster spawnMaster { get; protected set; }
 
 	static List<Master> masters = new List<Master>();
 
 	private static int frameLastCalled = 0;
 
 	public static void Begin() {
+		actionMaster = new ActionMaster();
+		masters.Add(actionMaster);
 		gameMaster = new GameMaster();
 		masters.Add(gameMaster);
 		inputMaster = new InputMaster();
 		masters.Add(inputMaster);
 		menuMaster = new MenuMaster();
 		masters.Add(menuMaster);
-		spawnMaster = new SpawnMaster();
-		masters.Add(spawnMaster);
 		missionMaster = new MissionMaster();
 		masters.Add(missionMaster);
+		spawnMaster = new SpawnMaster();
+		masters.Add(spawnMaster);
 	}
 
 	/// <summary>

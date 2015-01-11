@@ -13,7 +13,7 @@ using UnityEngine;
 /// <summary>
 /// Utilizes UnityEngine.Input, but allows for custom actions that can be modified at runtime
 /// </summary>
-public class InputManager : MonoBehaviour {
+public class ActionMaster : Master {
 	private static string configLocalPath = @"\Bamboo\Config\KeyBindings.txt";
 	private static string configFullPath;
 
@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour {
 
 	private static List<ActionCode> missingActionCodes = new List<ActionCode>();
 
-	private void Awake() {
+	public ActionMaster() {
 		Init();
 	}
 
