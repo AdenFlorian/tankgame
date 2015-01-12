@@ -16,14 +16,11 @@ using UnityEngine;
 public class ActionMaster : Master {
 	private string configPath;
 
-	// Holds the bb_KeyCodes for each ActionCode
-	private Dictionary<ActionCode, List<bb_KeyCode>> keyCodesFor = new Dictionary<ActionCode, List<bb_KeyCode>>();
+	// Holds the key codes for each ActionCode
+	private Dictionary<ActionCode, List<KeyCodeExt>> keyCodesFor = new Dictionary<ActionCode, List<KeyCodeExt>>();
 
 	private List<ActionCode> missingActionCodes = new List<ActionCode>();
 
-	/// <summary>
-	///
-	/// </summary>
 	/// <param name="relativeCfgFilePath">Path to keybindings config file relative to Application.dataPath (Assets folder)</param>
 	public ActionMaster(string relativeCfgFilePath = @"Config/KeyBindings.txt") {
 		configPath = Application.dataPath + "/" + relativeCfgFilePath;
@@ -32,9 +29,8 @@ public class ActionMaster : Master {
 
 	private void Init() {
 		// Fill currentKeysDict with ActionCodes and empty KeyCode Lists
-		FillCurrentKeysWithEnum();
+		FillActionDictWithEnum();
 
-		// Add some default keys
 		AddDefaultKeyCodes();
 
 #if !UNITY_WEBPLAYER
@@ -56,7 +52,7 @@ public class ActionMaster : Master {
 #endif
 	}
 
-	#region Dictionary Methods
+	#region DictionaryMethods
 
 	/// <summary>
 	/// Clears keys for given action
@@ -72,7 +68,7 @@ public class ActionMaster : Master {
 	public void ResetAllActionsToDefaultKeys() {
 		keyCodesFor.Clear();
 
-		FillCurrentKeysWithEnum();
+		FillActionDictWithEnum();
 
 		AddDefaultKeyCodes();
 	}
@@ -82,25 +78,22 @@ public class ActionMaster : Master {
 	/// </summary>
 	/// <param name="action">InputAction to modify</param>
 	/// <param name="keyList">List of InputCodes to assign to the given InputAction</param>
-	public void BindKeyToAction(ActionCode action, params bb_KeyCode[] inputKeys) {
-		List<bb_KeyCode> tempList = new List<bb_KeyCode>();
+	public void BindKeysToAction(ActionCode action, params KeyCodeExt[] inputKeys) {
+		keyCodesFor[action].Clear();
 
-		foreach (var item in inputKeys) {
-			tempList.Add(item);
+		foreach (KeyCodeExt keyCode in inputKeys) {
+			keyCodesFor[action].Add(keyCode);
 		}
-
-		// Change keyList for given action in the current keybindings dictionary
-		keyCodesFor[action] = tempList;
 	}
 
 	/// <summary>
-	/// Fills currentKeysDict with action codes and empty key lists
+	/// Fills dictionary with action codes and empty key lists
 	/// </summary>
-	private void FillCurrentKeysWithEnum() {
+	private void FillActionDictWithEnum() {
 		ActionCode[] values = (ActionCode[])Enum.GetValues(typeof(ActionCode));
 
 		foreach (ActionCode action in values) {
-			List<bb_KeyCode> tempList1 = new List<bb_KeyCode>();
+			List<KeyCodeExt> tempList1 = new List<KeyCodeExt>();
 
 			keyCodesFor.Add(action, tempList1);
 
@@ -110,27 +103,27 @@ public class ActionMaster : Master {
 
 	private void AddDefaultKeyCodes() {
 		// Weapon Actions
-		keyCodesFor[ActionCode.PrimaryFire].Add(bb_KeyCode.Mouse0);
-		keyCodesFor[ActionCode.SecondaryFire].Add(bb_KeyCode.Mouse1);
+		keyCodesFor[ActionCode.PrimaryFire].Add(KeyCodeExt.Mouse0);
+		keyCodesFor[ActionCode.SecondaryFire].Add(KeyCodeExt.Mouse1);
 
 		// Movement Actions
-		keyCodesFor[ActionCode.MoveForward].Add(bb_KeyCode.W);
-		keyCodesFor[ActionCode.MoveBackward].Add(bb_KeyCode.S);
-		keyCodesFor[ActionCode.TurnLeft].Add(bb_KeyCode.A);
-		keyCodesFor[ActionCode.TurnRight].Add(bb_KeyCode.D);
+		keyCodesFor[ActionCode.MoveForward].Add(KeyCodeExt.W);
+		keyCodesFor[ActionCode.MoveBackward].Add(KeyCodeExt.S);
+		keyCodesFor[ActionCode.TurnLeft].Add(KeyCodeExt.A);
+		keyCodesFor[ActionCode.TurnRight].Add(KeyCodeExt.D);
 	}
 
-	#endregion Dictionary Methods
+	#endregion DictionaryMethods
 
 	#region ConfigFunctions
 
-	private void WriteDictToConfig(Dictionary<ActionCode, List<bb_KeyCode>> dict) {
+	private void WriteDictToConfig(Dictionary<ActionCode, List<KeyCodeExt>> dict) {
 		using (StreamWriter config = new StreamWriter(configPath, false)) {
 			config.WriteLine("# Commented lines start with a '#'");
 			config.WriteLine("# Put action name on left of '='");
 			config.WriteLine("# Put inputs on left side of '=' and multiple inputs separated by commas ','");
 
-			foreach (KeyValuePair<ActionCode, List<bb_KeyCode>> pair in dict) {
+			foreach (KeyValuePair<ActionCode, List<KeyCodeExt>> pair in dict) {
 				string line = pair.Key.ToString() + "=";
 
 				for (int i = 0; i < pair.Value.Count; i++) {
@@ -179,13 +172,13 @@ public class ActionMaster : Master {
 				codes = null;
 			}
 
-			List<bb_KeyCode> workingInputCodeList = new List<bb_KeyCode>();	// Stores a working input code list
+			List<KeyCodeExt> workingInputCodeList = new List<KeyCodeExt>();	// Stores a working input code list
 
 			// Parses input codes and adds to working input code list
 			if (codes != null) {
 				for (int j = 0; j < codes.Length; j++) {
 					if (codes[j] != "") {
-						workingInputCodeList.Add((bb_KeyCode)Enum.Parse(typeof(bb_KeyCode), codes[j]));
+						workingInputCodeList.Add((KeyCodeExt)Enum.Parse(typeof(KeyCodeExt), codes[j]));
 					}
 				}
 			}
@@ -235,7 +228,7 @@ public class ActionMaster : Master {
 	}
 
 	private bool GetAction(ActionCode action, InputState state) {
-		foreach (bb_KeyCode keyCode in keyCodesFor[action]) {
+		foreach (KeyCodeExt keyCode in keyCodesFor[action]) {
 			KeyCode unityKeyCode = (KeyCode)keyCode;
 			if ((int)keyCode < 1000) {
 				if (state == InputState.Any && Input.GetKey(unityKeyCode)) {
@@ -245,11 +238,11 @@ public class ActionMaster : Master {
 				} else if (state == InputState.Down && Input.GetKeyDown(unityKeyCode)) {
 					return true;
 				}
-			} else if (keyCode == bb_KeyCode.MouseScrollUp) {
+			} else if (keyCode == KeyCodeExt.MouseScrollUp) {
 				if (Input.GetAxis("Mouse ScrollWheel") > 0) {
 					return true;
 				}
-			} else if (keyCode == bb_KeyCode.MouseScrollDown) {
+			} else if (keyCode == KeyCodeExt.MouseScrollDown) {
 				if (Input.GetAxis("Mouse ScrollWheel") < 0) {
 					return true;
 				}
@@ -275,54 +268,8 @@ public class ActionMaster : Master {
 	#endregion InputFunctions
 }
 
-#region Enumerators
+#region Enums
 
-/* ActionCodes with defaults
-
-/// <summary>
-/// Available actions to assign keyLists to
-/// Each ActionCode contains the value of its default InputCode
-/// All Action
-/// </summary>
-public enum ActionCode {
-	ChangeTacticalMode,
-	ToggleDevConsole,
-
-	// **WEAPON** //
-	PrimaryFire,
-	SecondaryFire,
-	RaiseLowerWeapon,
-	ReloadWeapon,
-
-	// **MOVEMENT** //
-	MoveForward,
-	MoveBackward,
-	StrafeLeft,
-	StrafeRight,
-	Jump,
-	Crouch,
-	Prone,
-	Stand,
-	SprintHold,
-	WalkHold,
-	WalkBackHold,
-	MoveSpeedIncrement,
-	MoveSpeedDecrement,
-
-	// **INENTORY** //
-	Inventory_NextItem,
-	Inventory_PrevItem,
-	Inventory_Open
-}
-*/
-
-// OldActionCodes with defaults
-// Anything set to over 9000 has no default keycode
-/// <summary>
-/// Available actions to assign keyLists to
-/// Each ActionCode contains the value of its default InputCode
-/// All Action
-/// </summary>
 public enum ActionCode {
 	MoveForward,
 	MoveBackward,
@@ -338,10 +285,11 @@ public enum AxisCode {
 }
 
 /// <summary>
+/// UnityEngine.KeyCode Extended
 /// A near copy of UnityEngine.KeyCode with a few additions
-/// Used internally
+/// Additions start at 1000
 /// </summary>
-public enum bb_KeyCode {
+public enum KeyCodeExt {
 	None = 0,
 	Backspace = 8,
 	Tab = 9,
@@ -587,4 +535,4 @@ public enum bb_KeyCode {
 	MouseScrollDown = 1001
 }
 
-#endregion Enumerators
+#endregion Enums
