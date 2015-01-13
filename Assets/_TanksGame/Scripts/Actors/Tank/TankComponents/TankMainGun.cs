@@ -25,8 +25,8 @@ public class TankMainGun : TankComponent {
 			loadedShell.rigidbody.isKinematic = false;
 			loadedShell.rigidbody.velocity = Vector3.zero;
 			//loadedShell.transform.parent = null;
-			loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.Impulse);
-			loadedShell.rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.Impulse);
+			loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.VelocityChange);
+			loadedShell.rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.VelocityChange);
 			loadedShell.GetComponent<ArtilleryShell>().Launch();
 			loadedShell = null;
 			StartCoroutine("DelayedLoadShell");

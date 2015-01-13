@@ -32,6 +32,8 @@ public class TankControllerAI : TankController {
 		} else {
 			DriveTowardsNextWaypoint();
 		}
+
+		OrientToWaypoint();
 	}
 
 	private void CheckIfArrived() {
@@ -50,6 +52,7 @@ public class TankControllerAI : TankController {
 		} else {
 			// Point self towards next waypnt
 			OrientToWaypoint();
+			tank.MoveForward();
 		}
 	}
 

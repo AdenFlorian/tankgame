@@ -6,12 +6,12 @@ public abstract class ActorController {
 
 	public ActorController(Actor actor) {
 		this.actor = actor;
-		Master.controllerMaster.controllerUpdateActions.Add(ControllerUpdate);
+		ControllerMaster.controllerUpdateActions.Add(ControllerUpdate);
 	}
 
 	protected virtual void ControllerUpdate() { }
 
 	public void OnActorDeath() {
-		Master.controllerMaster.controllerUpdateActions.Remove(ControllerUpdate);
+		ControllerMaster.controllerUpdateActions.Remove(ControllerUpdate);
 	}
 }

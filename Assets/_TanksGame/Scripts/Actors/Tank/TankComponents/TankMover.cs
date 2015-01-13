@@ -21,6 +21,9 @@ public class TankMover : TankComponent {
 	// Current values
 	public float currentForwardSpeed = 0f;
 	public float currentTurnRate = 0f;
+	public float currentRPM = 0f;
+
+	float forthBackForce = 0f;
 
 	public float speedNormalized {
 		get {
@@ -37,8 +40,10 @@ public class TankMover : TankComponent {
 	public float maxLookDown;
 	private float gunAngle = 0f;
 
-	private void Update() {
-		transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed) * Time.deltaTime);
+	private void FixedUpdate() {
+		rigidbody.AddRelativeForce(new Vector3(0f, 0f, forthBackForce) * Time.deltaTime * 1000, ForceMode.Force);
+
+		//transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed) * Time.deltaTime);
 
 		transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
 	}
@@ -67,10 +72,14 @@ public class TankMover : TankComponent {
 
 	public void MoveOrder(TankMove moveOrder) {
 		if (moveOrder.forth) {
-			currentForwardSpeed += accelForward * Time.deltaTime;
+			currentRPM += accelForward * Time.deltaTime;
+			forthBackForce = accelForward * Mathf.Clamp((-transform.worldToLocalMatrix.MultiplyVector(rigidbody.velocity).z / maxForward) + 1, 0, 1);
 		} else if (moveOrder.back) {
-			currentForwardSpeed -= accelBackward * Time.deltaTime;
+			currentRPM -= accelBackward * Time.deltaTime;
+			forthBackForce = -accelForward * Mathf.Clamp((-Mathf.Abs(transform.worldToLocalMatrix.MultiplyVector(rigidbody.velocity).z) / maxForward) + 1, 0, 1);
 		} else {
+
+			forthBackForce = 0f;
 			if (currentForwardSpeed > 0) {
 				currentForwardSpeed -= frictionforward * Time.deltaTime;
 				currentForwardSpeed = Mathf.Clamp(currentForwardSpeed, 0, maxForward);

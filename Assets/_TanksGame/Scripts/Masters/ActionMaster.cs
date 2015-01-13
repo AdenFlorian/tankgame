@@ -17,7 +17,7 @@ public class ActionMaster : Master {
 	private string configPath;
 
 	// Holds the key codes for each ActionCode
-	private Dictionary<ActionCode, List<KeyCodeExt>> keyCodesFor = new Dictionary<ActionCode, List<KeyCodeExt>>();
+	private static Dictionary<ActionCode, List<KeyCodeExt>> keyCodesFor = new Dictionary<ActionCode, List<KeyCodeExt>>();
 
 	private List<ActionCode> missingActionCodes = new List<ActionCode>();
 
@@ -215,19 +215,19 @@ public class ActionMaster : Master {
 		Any
 	}
 
-	public bool GetActionDown(ActionCode action) {
+	public static bool GetActionDown(ActionCode action) {
 		return GetAction(action, InputState.Down);
 	}
 
-	public bool GetActionUp(ActionCode action) {
+	public static bool GetActionUp(ActionCode action) {
 		return GetAction(action, InputState.Up);
 	}
 
-	public bool GetAction(ActionCode action) {
+	public static bool GetAction(ActionCode action) {
 		return GetAction(action, InputState.Any);
 	}
 
-	private bool GetAction(ActionCode action, InputState state) {
+	private static bool GetAction(ActionCode action, InputState state) {
 		foreach (KeyCodeExt keyCode in keyCodesFor[action]) {
 			KeyCode unityKeyCode = (KeyCode)keyCode;
 			if ((int)keyCode < 1000) {
@@ -252,7 +252,7 @@ public class ActionMaster : Master {
 		return false;
 	}
 
-	public float GetAxis(AxisCode axisCode) {
+	public static float GetAxis(AxisCode axisCode) {
 		switch (axisCode) {
 			case AxisCode.LookHorizontal:
 				return Input.GetAxis("Mouse X");

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ControllerMaster : Master {
 
-	public List<Action> controllerUpdateActions = new List<Action>();
+	public static List<Action> controllerUpdateActions = new List<Action>();
 
 	public ControllerMaster() {
 

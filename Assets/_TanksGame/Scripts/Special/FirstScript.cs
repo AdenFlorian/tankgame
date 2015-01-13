@@ -2,7 +2,7 @@
 
 public class FirstScript : MonoBehaviour {
 	private void Awake() {
-		Master.Begin();
+		Master.MasterAwake();
 	}
 
 	private void Start() {

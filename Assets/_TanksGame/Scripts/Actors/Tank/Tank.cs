@@ -93,7 +93,7 @@ public class Tank : Actor {
 	}
 	public void OnZeroHP() {
 		mainGun.OnActorDeath();
-		Master.missionMaster.ReportActorEvent(this, MissionEvent.ActorDeath);
+		MissionMaster.ReportMissionEvent(MissionEvent.ActorDeath);
 		// death script to be called last, as it destroys the gameobject
 		death.Die();
 	}

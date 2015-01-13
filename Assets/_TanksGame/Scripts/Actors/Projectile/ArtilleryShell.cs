@@ -4,7 +4,6 @@ using UnityEngine;
 public class ArtilleryShell : MonoBehaviour {
 	public GameObject shellExplosionPrefab;
 	private Vector3 launchPosition;
-	//private float distanceTraveled = 0f;
 	private float distanceFromLaunch = 0f;
 	private float armDistance = 2f;
 	private TankShellState shellState = TankShellState.Pooled;
@@ -38,10 +37,10 @@ public class ArtilleryShell : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision collision) {
-		//Debug.Log("Shell collided with: " + collision.transform.name);
+		Debug.Log("Shell collided with: " + collision.transform.name);
 		switch (shellState) {
 			case TankShellState.Launched:
-				//Dud();
+				Dud();
 				break;
 			case TankShellState.Armed:
 				CheckCollision(collision);
@@ -52,9 +51,12 @@ public class ArtilleryShell : MonoBehaviour {
 	}
 
 	private void CheckCollision(Collision collision) {
-		ActorHitbox actorHitbox = collision.gameObject.GetComponent<ActorHitbox>();
-		if (actorHitbox != null) {
-			actorHitbox.Damage(damage);
+		//ActorHitbox actorHitbox = collision.gameObject.GetComponent<ActorHitbox>();
+		Actor actor = collision.gameObject.GetComponent<Actor>();
+		if (actor != null) {
+			actor.Damage(damage);
+		} else if (true) {
+
 		}
 		Explode();
 	}
@@ -79,9 +81,7 @@ public class ArtilleryShell : MonoBehaviour {
 
 	public void SendToPool() {
 		launchPosition = Vector3.zero;
-		//distanceTraveled = 0f;
 		distanceFromLaunch = 0f;
-		//transform.parent = AmmoPool.Instance.transform;
 		shellState = TankShellState.Pooled;
 		//rigidbody.isKinematic = true;
 		gameObject.SetActive(false);

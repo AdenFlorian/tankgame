@@ -1,39 +1,38 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class Master {
+public abstract class Master {
 
-	public static ActionMaster actionMaster { get; protected set; }
-	public static ControllerMaster controllerMaster { get; protected set; }
-	public static GameMaster gameMaster { get; protected set; }
-	public static InputMaster inputMaster { get; protected set; }
-	public static MenuMaster menuMaster { get; protected set; }
-	public static MissionMaster missionMaster { get; protected set; }
-	public static SpawnMaster spawnMaster { get; protected set; }
+	protected static ActionMaster actionMaster;
+	protected static ControllerMaster controllerMaster;
+	protected static GameMaster gameMaster;
+	protected static InputMaster inputMaster;
+	protected static MenuMaster menuMaster;
+	protected static MissionMaster missionMaster;
+	protected static SpawnMaster spawnMaster;
 
 	static List<Master> masters = new List<Master>();
 
 	private static int frameLastCalled = 0;
 
-	public static void Begin() {
+	public Master() {
+		masters.Add(this);
+	}
+
+	public static void MasterAwake() {
 		actionMaster = new ActionMaster();
-		masters.Add(actionMaster);
 		controllerMaster = new ControllerMaster();
-		masters.Add(controllerMaster);
 		gameMaster = new GameMaster();
-		masters.Add(gameMaster);
 		inputMaster = new InputMaster();
-		masters.Add(inputMaster);
 		menuMaster = new MenuMaster();
-		masters.Add(menuMaster);
 		missionMaster = new MissionMaster();
-		masters.Add(missionMaster);
 		spawnMaster = new SpawnMaster();
-		masters.Add(spawnMaster);
+
+		missionMaster.LoadMission();
 	}
 
 	/// <summary>
-	/// Should only be able to be called once per frame
+	/// Should only be called once per frame
 	/// Tell all masters to update
 	/// </summary>
 	public static void StartMasterUpdate() {
@@ -43,6 +42,7 @@ public abstract partial class Master {
 		foreach (Master master in masters) {
 			master.MasterUpdate();
 		}
+		frameLastCalled = Time.frameCount;
 	}
 
 	protected virtual void MasterUpdate() { }

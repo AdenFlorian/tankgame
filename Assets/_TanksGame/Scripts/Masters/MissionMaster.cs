@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-public abstract partial class Master {
-	public class MissionMaster : Master {
+public class MissionMaster : Master {
 
-		public Mission currentMission { get; private set; }
+	public static Mission currentMission { get; private set; }
 
-		public Dictionary<MissionEvent, Action> triggers;
+	public MissionMaster() {
+		//LoadMission();
+	}
 
-		public MissionMaster() {
-			LoadMission();
-		}
+	~MissionMaster() {
 
-		~MissionMaster() {
+	}
 
-		}
+	public static void ReportMissionEvent(MissionEvent missionEvent) {
+		currentMission.triggers[missionEvent].Invoke();
+	}
 
-		public void ReportActorEvent(Actor actor, MissionEvent missionEvent) {
-			foreach (Action reaction in currentMission.triggers[missionEvent]) {
-				reaction.Invoke();
-			}
-		}
-
-		public void LoadMission() {
-			currentMission = new MainMission();
-		}
+	public void LoadMission() {
+		currentMission = new MainMission();
+		ReportMissionEvent(MissionEvent.Load);
 	}
 }
 
 public enum MissionEvent {
+	Load,
 	ActorDeath,
 	ActorSpawn
 }
