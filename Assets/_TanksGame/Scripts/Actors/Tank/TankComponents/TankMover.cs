@@ -40,12 +40,28 @@ public class TankMover : TankComponent {
 	public float maxLookDown;
 	private float gunAngle = 0f;
 
-	private void FixedUpdate() {
-		rigidbody.AddRelativeForce(new Vector3(0f, 0f, forthBackForce) * Time.deltaTime * 1000, ForceMode.Force);
+	bool isGrounded = false;
 
-		//transform.position += transform.localToWorldMatrix.MultiplyVector(new Vector3(0f, 0f, currentForwardSpeed) * Time.deltaTime);
+	private void FixedUpdate() {
+		CheckIfGrounded();
+		if (isGrounded) {
+			rigidbody.AddRelativeForce(new Vector3(0f, 0f, forthBackForce) * Time.deltaTime * 1000, ForceMode.Force);
+		}
 
 		transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
+	}
+
+	void CheckIfGrounded() {
+		Vector3 tankDownVecWorld = transform.localToWorldMatrix.MultiplyVector(-Vector3.up);
+		Ray ray = new Ray(transform.position, tankDownVecWorld);
+		float rayLength = 0.2f;
+		Debug.DrawRay(ray.origin, ray.direction * rayLength);
+		bool hitSomething = Physics.Raycast(ray, rayLength);
+		if (hitSomething) {
+			isGrounded = true;
+		} else {
+			isGrounded = false;
+		}
 	}
 
 	public void LookOrder(TankLook tankLook) {

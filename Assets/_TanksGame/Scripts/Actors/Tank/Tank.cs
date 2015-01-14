@@ -35,7 +35,7 @@ public class Tank : Actor {
 
 	public override void InitController(ControlledBy controllerType) {
 		switch (controllerType) {
-			case ControlledBy.Player:
+			case ControlledBy.PlayerLocal:
 				controller = new TankControllerPlayer(this);
 				camera = gameObject.AddComponent<TankCamera>();
 				//GameMaster.playerTank = this;
