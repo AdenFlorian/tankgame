@@ -1,4 +1,4 @@
-﻿##################
+##################
 # Unity ignores:
 #
 # !!! WARNING !!!
@@ -56,3 +56,6 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
+Assets/Bamboo.meta
+Assets/Bamboo/Config.meta
+Assets/Bamboo/Config/KeyBindings.txt.bak.meta
