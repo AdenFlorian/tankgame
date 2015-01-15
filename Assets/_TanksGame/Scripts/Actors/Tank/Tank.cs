@@ -24,7 +24,6 @@ public class Tank : Actor {
 
 	// Info for tankMover
 	private TankMove tankMove = new TankMove();
-	private TankLook tankLook = new TankLook();
 
 	protected void Awake() {
 	}
@@ -57,8 +56,6 @@ public class Tank : Actor {
 		// TODO: Need to optimize
 		mover.MoveOrder(tankMove);
 		tankMove.Clear();
-		mover.LookOrder(tankLook);
-		tankLook.Clear();
 	}
 
 	public void MoveForward() {
@@ -78,11 +75,11 @@ public class Tank : Actor {
 	}
 
 	public void LookHorizontal(float input) {
-		tankLook.x = input;
+        mover.RotateGun(input);
 	}
 
 	public void LookVertical(float input) {
-		tankLook.y = input;
+        mover.AngleGun(tankGun.transform, input);
 	}
 
 	public void Fire() {
@@ -120,19 +117,5 @@ public class TankMove {
 		back = false;
 		left = false;
 		right = false;
-	}
-}
-
-public class TankLook {
-	public TankLook() {
-		Clear();
-	}
-
-	public float x;
-	public float y;
-
-	public void Clear() {
-		x = 0f;
-		y = 0f;
 	}
 }

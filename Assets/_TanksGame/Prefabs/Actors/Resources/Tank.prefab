@@ -1091,8 +1091,8 @@ MonoBehaviour:
   currentForwardSpeed: 0
   currentTurnRate: 0
   currentRPM: 0
-  maxLookUp: 27
-  maxLookDown: -5
+  maxGunAngle: 10
+  minGunAngle: -4
 --- !u!198 &19802690
 ParticleSystem:
   m_ObjectHideFlags: 1

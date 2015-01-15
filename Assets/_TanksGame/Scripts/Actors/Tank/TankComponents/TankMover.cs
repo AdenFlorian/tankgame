@@ -1,5 +1,15 @@
 ﻿using UnityEngine;
 
+public enum LeftRight{
+    Left,
+    Right
+}
+
+public enum UpDown{
+    Down,
+    Up
+}
+
 public class TankMover : TankComponent {
 	// Max values
 	//[Range(0, 1)]
@@ -35,9 +45,8 @@ public class TankMover : TankComponent {
 	}
 
 	// Main gun movement (look)
-	public float maxLookUp;
-
-	public float maxLookDown;
+	public float maxGunAngle;
+	public float minGunAngle;
 	private float gunAngle = 0f;
 
 	bool isGrounded = false;
@@ -64,27 +73,40 @@ public class TankMover : TankComponent {
 		}
 	}
 
-	public void LookOrder(TankLook tankLook) {
-		tank.tankTop.transform.Rotate(0f, tankLook.x, 0f, Space.Self);
-		RotateGun(tankLook.y);
-	}
+    // Rotate gun on y axis left or right
+    public void RotateGun(float degrees, LeftRight leftOrRight) {
+        // Positive to right or clockwise
+        // Negative to the left or counterclockwise
+        if (leftOrRight == LeftRight.Left) {
+            degrees = -degrees;
+        }
+        RotateGun(degrees);
+    }
 
-	private void RotateGun(float y) {
-		Transform gunTrans = tank.tankGun.transform;
+    // Rotate gun on y axis left or right
+    public void RotateGun(float degrees) {
+        tank.tankTop.transform.Rotate(0f, degrees, 0f, Space.Self);
+    }
 
-		gunTrans.Rotate(y, 0f, 0f, Space.Self);
-		gunAngle += y;
+    public void AngleGun(Transform gunTrans, float degrees, UpDown upOrDown) {
 
-		if (gunAngle > maxLookUp) {
-			float adjustX = gunAngle - maxLookUp;
-			gunTrans.Rotate(-adjustX, 0f, 0f, Space.Self);
-			gunAngle += -adjustX;
-		} else if (gunAngle < maxLookDown) {
-			float adjustX = maxLookDown - gunAngle;
-			gunTrans.Rotate(adjustX, 0f, 0f, Space.Self);
-			gunAngle += adjustX;
-		}
-	}
+        if (upOrDown == UpDown.Down) {
+            degrees = -degrees;
+        }
+
+        AngleGun(gunTrans, degrees);
+    }
+
+    // Should only rotate gun once, clamp degrees before rotating
+    public void AngleGun(Transform gunTrans, float degrees) {
+
+        float desiredAngle = gunAngle + degrees;
+        float clampedAngle = Mathf.Clamp(desiredAngle, minGunAngle, maxGunAngle);
+
+        gunTrans.Rotate(clampedAngle - gunAngle, 0f, 0f, Space.Self);
+
+        gunAngle = clampedAngle;
+    }
 
 	public void MoveOrder(TankMove moveOrder) {
 		if (moveOrder.forth) {
