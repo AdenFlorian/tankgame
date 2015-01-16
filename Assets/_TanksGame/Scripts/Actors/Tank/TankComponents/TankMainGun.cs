@@ -24,7 +24,6 @@ public class TankMainGun : TankComponent {
 			loadedShell.transform.rotation = shellSlot.transform.rotation;
 			loadedShell.rigidbody.isKinematic = false;
 			loadedShell.rigidbody.velocity = Vector3.zero;
-			//loadedShell.transform.parent = null;
 			loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.VelocityChange);
 			loadedShell.rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.VelocityChange);
 			ArtilleryShell artShell = loadedShell.GetComponent<ArtilleryShell>();
@@ -48,11 +47,6 @@ public class TankMainGun : TankComponent {
 
 	private void LoadNewShell() {
 		loadedShell = AmmoPool.Instance.GetNextShell();
-		//loadedShell.transform.parent = shellSlot.transform;
-		//loadedShell.transform.position = shellSlot.transform.position;
-		//loadedShell.transform.rotation = shellSlot.transform.rotation;
-		//loadedShell.rigidbody.isKinematic = true;
-		//loadedShell.SetActive(false);
 	}
 
 	public override void OnActorDeath() {

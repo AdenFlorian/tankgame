@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnMaster : Master {
 
+	private static Transform actorsParent;
+
+	static Dictionary<string,Transform> actorParents = new Dictionary<string,Transform>();
+
 	public SpawnMaster() {
+		actorsParent = new GameObject("Actors").transform;
 		Debug.Log(GetType().Name + " Loaded!");
 	}
 
@@ -11,11 +17,11 @@ public class SpawnMaster : Master {
 		Vector3 spawnPos = new Vector3(), Quaternion spawnRot = new Quaternion()) where T : Actor {
 
 		GameObject actorPrefab = Resources.Load<GameObject>(typeof(T).ToString());
-		GameObject spawnedActor = GameObject.Instantiate(actorPrefab, spawnPos, spawnRot) as GameObject;
-		T newActor = spawnedActor.GetComponent<T>();
+		GameObject spawnedActorGO = Instantiate(actorPrefab, spawnPos, spawnRot);
+		T newActor = spawnedActorGO.GetComponent<T>();
 		newActor.OnSpawn();
 		newActor.InitController(controller);
-		spawnedActor.name += spawnedActor.GetComponent<Actor>().actorID;
+		spawnedActorGO.name += newActor.actorID;
 		return newActor;
 	}
 
@@ -37,6 +43,27 @@ public class SpawnMaster : Master {
 		}
 
 		return newActors;
+	}
+
+	public static GameObject Instantiate(GameObject newGO) {
+		return Instantiate(newGO, Vector3.zero, Quaternion.identity);
+	}
+
+	public static GameObject Instantiate(GameObject newGO, Vector3 position, Quaternion rotation) {
+		GameObject spawnedGO = GameObject.Instantiate(newGO, position, rotation) as GameObject;
+		SetActorParent(spawnedGO);
+		return spawnedGO;
+	}
+
+	private static void SetActorParent(GameObject actorGO) {
+		string actorName = actorGO.name;
+		Transform parGO;
+		if (actorParents.TryGetValue(actorName, out parGO) == false) {
+			parGO = new GameObject(actorName + "s").transform;
+			parGO.transform.parent = actorsParent;
+			actorParents.Add(actorName, parGO);
+		}
+		actorGO.transform.parent = parGO;
 	}
 }
 

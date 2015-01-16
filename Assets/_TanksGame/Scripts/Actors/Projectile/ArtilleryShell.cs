@@ -2,12 +2,14 @@
 using UnityEngine;
 
 public class ArtilleryShell : MonoBehaviour {
+
 	public GameObject shellExplosionPrefab;
+
 	private Vector3 launchPosition;
 	private float distanceFromLaunch = 0f;
 	private float armDistance = 2f;
 	private TankShellState shellState = TankShellState.Pooled;
-	public float damage = 10000f;
+	private float damage = 10000f;
 	private string OriginalName = "ArtilleryShell";
 
 	private void Awake() {
@@ -52,7 +54,6 @@ public class ArtilleryShell : MonoBehaviour {
 	}
 
 	private void CheckCollision(Collision collision) {
-		//ActorHitbox actorHitbox = collision.gameObject.GetComponent<ActorHitbox>();
 		Actor actor = collision.gameObject.GetComponent<Actor>();
 		if (actor != null) {
 			actor.Damage(damage);
@@ -64,7 +65,7 @@ public class ArtilleryShell : MonoBehaviour {
 
 	private void Explode() {
 		shellState = TankShellState.Exploded;
-		GameObject newExplosionGO = GameObject.Instantiate(shellExplosionPrefab, transform.position, transform.rotation) as GameObject;
+		GameObject newExplosionGO = SpawnMaster.Instantiate(shellExplosionPrefab, transform.position, transform.rotation);
 		Destroy(newExplosionGO, 5f);
 		SendToPool();
 	}
@@ -84,7 +85,6 @@ public class ArtilleryShell : MonoBehaviour {
 		launchPosition = Vector3.zero;
 		distanceFromLaunch = 0f;
 		shellState = TankShellState.Pooled;
-		//rigidbody.isKinematic = true;
 		gameObject.name = OriginalName;
 		gameObject.SetActive(false);
 		AmmoPool.Instance.ReturnShell(gameObject);

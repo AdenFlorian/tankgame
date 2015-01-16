@@ -2,7 +2,9 @@
 using UnityEngine;
 
 public class TankDeath : TankComponent {
+
 	public GameObject deathFX;
+
 	void Start() {
 	}
 
@@ -10,7 +12,7 @@ public class TankDeath : TankComponent {
 	}
 
 	public void Die() {
-		GameObject fx = GameObject.Instantiate(deathFX, tank.transform.position, tank.transform.rotation) as GameObject;
+		GameObject fx = SpawnMaster.Instantiate(deathFX, tank.transform.position, tank.transform.rotation);
 		Destroy(fx, 10);
 		Destroy(tank.gameObject);
 	}

@@ -18,11 +18,10 @@ public class AmmoPool : MonoBehaviour {
 		GameObject newShell;
 
 		for (int i = 0; i < poolSize; i++) {
-			newShell = GameObject.Instantiate(tankShellPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+			newShell = SpawnMaster.Instantiate(tankShellPrefab);
 			tankShellQueue.Enqueue(newShell);
 			newShell.SetActive(false);
 			newShell.rigidbody.isKinematic = true;
-			newShell.transform.parent = transform;
 		}
 	}
 
