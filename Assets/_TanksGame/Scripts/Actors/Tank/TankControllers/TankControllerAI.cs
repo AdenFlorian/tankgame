@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TankControllerAI : TankController {
 
 	public Vector3 distanceVector;
 	public Vector3 worldSpaceForwardVector;
-	public Vector3 crossProduct;
+	public Vector3 worldSpaceForwardGunVector;
+	public Vector3 crossFromTankToWaypnt;
+	public Vector3 crossFromGunToWaypnt;
 	public float distanceToWaypoint;
 	public float dotProduct;
 	public float angleTowardsWaypoint;	// Degree of difference between forward vector and vector towards waypoint
+	public float angleFromGunToWaypoint;
 
 	public bool arrived = false;
 	public bool pointedTowardsNextWaypoint = false;
@@ -19,7 +23,10 @@ public class TankControllerAI : TankController {
 
 	protected override void ControllerUpdate() {
 
-		DoMathStuff();
+		if (nextWaypoint != null) {
+			CalculateWaypntStuff();
+		}
+
 		CheckIfArrived();
 
 		switch (state) {
@@ -39,15 +46,22 @@ public class TankControllerAI : TankController {
 			default:
 				break;
 		}
+
+		AimCannonAtTarget();
+
+		tank.Fire();
 	}
 
-	private void DoMathStuff() {
+	private void CalculateWaypntStuff() {
 		distanceVector = nextWaypoint.position - tank.transform.position;
 		distanceToWaypoint = distanceVector.magnitude;
 		worldSpaceForwardVector = tank.transform.localToWorldMatrix.MultiplyVector(Vector3.forward);
+		worldSpaceForwardGunVector = tank.tankTop.transform.localToWorldMatrix.MultiplyVector(Vector3.forward);
 		angleTowardsWaypoint = Vector3.Angle(distanceVector, worldSpaceForwardVector);
+		angleFromGunToWaypoint = Vector3.Angle(distanceVector, worldSpaceForwardGunVector);
 		dotProduct = Vector3.Dot(distanceVector, worldSpaceForwardVector);
-		crossProduct = Vector3.Cross(distanceVector, worldSpaceForwardVector);
+		crossFromTankToWaypnt = Vector3.Cross(distanceVector, worldSpaceForwardVector);
+		crossFromGunToWaypnt = Vector3.Cross(distanceVector, worldSpaceForwardGunVector);
 	}
 
 	private void CheckIfArrived() {
@@ -79,10 +93,18 @@ public class TankControllerAI : TankController {
 	}
 
 	private void OrientToWaypoint() {
-		if (crossProduct.y > 0) {
+		if (crossFromTankToWaypnt.y > 0) {
 			tank.TurnLeft();
 		} else {
 			tank.TurnRight();
 		}
+	}
+
+	private void AimCannonAtTarget() {
+		float angleToTarget = angleFromGunToWaypoint;
+		if (crossFromGunToWaypnt.y > 0) {
+			angleToTarget = -angleToTarget;
+		}
+		tank.LookHorizontal(angleToTarget + Random.Range(-30.5f, 35.5f));
 	}
 }

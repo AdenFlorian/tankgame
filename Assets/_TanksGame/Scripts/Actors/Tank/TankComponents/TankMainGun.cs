@@ -27,7 +27,9 @@ public class TankMainGun : TankComponent {
 			//loadedShell.transform.parent = null;
 			loadedShell.rigidbody.AddRelativeForce(0f, 0f, 50f, ForceMode.VelocityChange);
 			loadedShell.rigidbody.AddRelativeTorque(0f, 0f, 10f, ForceMode.VelocityChange);
-			loadedShell.GetComponent<ArtilleryShell>().Launch();
+			ArtilleryShell artShell = loadedShell.GetComponent<ArtilleryShell>();
+			artShell.Launch();
+			loadedShell.name += tank.actorID;
 			loadedShell = null;
 			StartCoroutine("DelayedLoadShell");
 
@@ -54,6 +56,8 @@ public class TankMainGun : TankComponent {
 	}
 
 	public override void OnActorDeath() {
-		loadedShell.GetComponent<ArtilleryShell>().SendToPool();
+		if (loadedShell != null) {
+			loadedShell.GetComponent<ArtilleryShell>().SendToPool();
+		}
 	}
 }

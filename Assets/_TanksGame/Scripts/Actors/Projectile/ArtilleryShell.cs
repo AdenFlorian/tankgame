@@ -8,8 +8,9 @@ public class ArtilleryShell : MonoBehaviour {
 	private float armDistance = 2f;
 	private TankShellState shellState = TankShellState.Pooled;
 	public float damage = 10000f;
+	private string OriginalName = "ArtilleryShell";
 
-	private void Start() {
+	private void Awake() {
 	}
 
 	private void Update() {
@@ -37,7 +38,7 @@ public class ArtilleryShell : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision collision) {
-		Debug.Log("Shell collided with: " + collision.transform.name);
+		Debug.Log(gameObject.name + " shell collided with: " + collision.transform.name);
 		switch (shellState) {
 			case TankShellState.Launched:
 				Dud();
@@ -84,7 +85,9 @@ public class ArtilleryShell : MonoBehaviour {
 		distanceFromLaunch = 0f;
 		shellState = TankShellState.Pooled;
 		//rigidbody.isKinematic = true;
+		gameObject.name = OriginalName;
 		gameObject.SetActive(false);
+		AmmoPool.Instance.ReturnShell(gameObject);
 	}
 
 	private enum TankShellState {

@@ -15,7 +15,7 @@ public class MainMission : Mission {
 
 	private void OnEnemyTankDeath() {
 		for (int i = 0; i < 2; i++) {
-			SpawnMaster.SpawnActor(typeof(Tank), ControlledBy.AI, new Vector3(UnityEngine.Random.Range(-30, 30), 1f, UnityEngine.Random.Range(-30, 30)));
+			SpawnMaster.SpawnActor<Tank>(ControlledBy.AI, new Vector3(UnityEngine.Random.Range(-30, 30), 1f, UnityEngine.Random.Range(-30, 30)));
 		}
 	}
 

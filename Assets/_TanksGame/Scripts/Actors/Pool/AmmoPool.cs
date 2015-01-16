@@ -1,25 +1,28 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class AmmoPool : MonoBehaviour {
 	public static AmmoPool Instance;
 
 	public GameObject tankShellPrefab;
 
-	public uint poolSize = 10;
+	public int poolSize = 1000;
 
-	private GameObject[] tankShellPool;
-
-	private uint shellIndex = 0;
+	private Queue<GameObject> tankShellQueue;
 
 	private void Awake() {
-		tankShellPool = new GameObject[poolSize];
+		tankShellQueue = new Queue<GameObject>(poolSize);
 		Instance = this;
 
+		GameObject newShell;
+
 		for (int i = 0; i < poolSize; i++) {
-			tankShellPool[i] = GameObject.Instantiate(tankShellPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-			tankShellPool[i].SetActive(false);
-			tankShellPool[i].rigidbody.isKinematic = true;
-			tankShellPool[i].transform.parent = transform;
+			newShell = GameObject.Instantiate(tankShellPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+			tankShellQueue.Enqueue(newShell);
+			newShell.SetActive(false);
+			newShell.rigidbody.isKinematic = true;
+			newShell.transform.parent = transform;
 		}
 	}
 
@@ -30,12 +33,10 @@ public class AmmoPool : MonoBehaviour {
 	}
 
 	public GameObject GetNextShell() {
-		if (shellIndex == poolSize - 1) {
-			shellIndex = 0;
-		} else {
-			shellIndex++;
-		}
-		//tankShellPool[shellIndex].SetActive(true);
-		return tankShellPool[shellIndex];
+		return tankShellQueue.Dequeue();
+	}
+
+	public void ReturnShell(GameObject retrunedGO) {
+		tankShellQueue.Enqueue(retrunedGO);
 	}
 }

@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public enum LeftRight{
-    Left,
-    Right
+public enum LeftRight {
+	Left,
+	Right
 }
 
-public enum UpDown{
-    Down,
-    Up
+public enum UpDown {
+	Down,
+	Up
 }
 
 public class TankMover : TankComponent {
@@ -51,16 +51,27 @@ public class TankMover : TankComponent {
 
 	bool isGrounded = false;
 
+	private void Update() {
+	}
+
 	private void FixedUpdate() {
+		TankMove tankMove = tank.tankMove;
+		RotateGun(tankMove.rotateGun);
+		AngleGun(tank.mainGun.transform, tankMove.angleGun);
+		MoveOrder(tankMove);
+
+		transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
+
 		CheckIfGrounded();
+
 		if (isGrounded) {
 			rigidbody.AddRelativeForce(new Vector3(0f, 0f, forthBackForce) * Time.deltaTime * 1000, ForceMode.Force);
 		}
 
-		transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
+		tank.tankMove.Clear();
 	}
 
-	void CheckIfGrounded() {
+	private void CheckIfGrounded() {
 		Vector3 tankDownVecWorld = transform.localToWorldMatrix.MultiplyVector(-Vector3.up);
 		Ray ray = new Ray(transform.position, tankDownVecWorld);
 		float rayLength = 0.2f;
@@ -73,42 +84,42 @@ public class TankMover : TankComponent {
 		}
 	}
 
-    // Rotate gun on y axis left or right
-    public void RotateGun(float degrees, LeftRight leftOrRight) {
-        // Positive to right or clockwise
-        // Negative to the left or counterclockwise
-        if (leftOrRight == LeftRight.Left) {
-            degrees = -degrees;
-        }
-        RotateGun(degrees);
-    }
+	// Rotate gun on y axis left or right
+	private void RotateGun(float degrees, LeftRight leftOrRight) {
+		// Positive to right or clockwise
+		// Negative to the left or counterclockwise
+		if (leftOrRight == LeftRight.Left) {
+			degrees = -degrees;
+		}
+		RotateGun(degrees);
+	}
 
-    // Rotate gun on y axis left or right
-    public void RotateGun(float degrees) {
-        tank.tankTop.transform.Rotate(0f, degrees, 0f, Space.Self);
-    }
+	// Rotate gun on y axis left or right
+	private void RotateGun(float degrees) {
+		tank.tankTop.transform.Rotate(0f, degrees, 0f, Space.Self);
+	}
 
-    public void AngleGun(Transform gunTrans, float degrees, UpDown upOrDown) {
+	private void AngleGun(Transform gunTrans, float degrees, UpDown upOrDown) {
 
-        if (upOrDown == UpDown.Down) {
-            degrees = -degrees;
-        }
+		if (upOrDown == UpDown.Down) {
+			degrees = -degrees;
+		}
 
-        AngleGun(gunTrans, degrees);
-    }
+		AngleGun(gunTrans, degrees);
+	}
 
-    // Should only rotate gun once, clamp degrees before rotating
-    public void AngleGun(Transform gunTrans, float degrees) {
+	// Should only rotate gun once, clamp degrees before rotating
+	private void AngleGun(Transform gunTrans, float degrees) {
 
-        float desiredAngle = gunAngle + degrees;
-        float clampedAngle = Mathf.Clamp(desiredAngle, minGunAngle, maxGunAngle);
+		float desiredAngle = gunAngle + degrees;
+		float clampedAngle = Mathf.Clamp(desiredAngle, minGunAngle, maxGunAngle);
 
-        gunTrans.Rotate(clampedAngle - gunAngle, 0f, 0f, Space.Self);
+		gunTrans.Rotate(clampedAngle - gunAngle, 0f, 0f, Space.Self);
 
-        gunAngle = clampedAngle;
-    }
+		gunAngle = clampedAngle;
+	}
 
-	public void MoveOrder(TankMove moveOrder) {
+	private void MoveOrder(TankMove moveOrder) {
 		if (moveOrder.forth) {
 			currentRPM += accelForward * Time.deltaTime;
 			forthBackForce = accelForward * Mathf.Clamp((-transform.worldToLocalMatrix.MultiplyVector(rigidbody.velocity).z / maxForward) + 1, 0, 1);

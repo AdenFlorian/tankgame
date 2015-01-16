@@ -23,7 +23,7 @@ public class Tank : Actor {
 	public TankControllerType controlledBy;
 
 	// Info for tankMover
-	private TankMove tankMove = new TankMove();
+	public TankMove tankMove = new TankMove();
 
 	protected void Awake() {
 	}
@@ -54,8 +54,8 @@ public class Tank : Actor {
 
 	private void Update() {
 		// TODO: Need to optimize
-		mover.MoveOrder(tankMove);
-		tankMove.Clear();
+		//mover.MoveOrder(tankMove);
+		//tankMove.Clear();
 	}
 
 	public void MoveForward() {
@@ -74,12 +74,12 @@ public class Tank : Actor {
 		tankMove.right = true;
 	}
 
-	public void LookHorizontal(float input) {
-        mover.RotateGun(input);
+	public void LookHorizontal(float degrees) {
+		tankMove.rotateGun = degrees;
 	}
 
-	public void LookVertical(float input) {
-        mover.AngleGun(tankGun.transform, input);
+	public void LookVertical(float degrees) {
+		tankMove.angleGun = degrees;
 	}
 
 	public void Fire() {
@@ -111,11 +111,15 @@ public class TankMove {
 	public bool back;
 	public bool left;
 	public bool right;
+	public float rotateGun;
+	public float angleGun;
 
 	public void Clear() {
 		forth = false;
 		back = false;
 		left = false;
 		right = false;
+		rotateGun = 0;
+		angleGun = 0;
 	}
 }
