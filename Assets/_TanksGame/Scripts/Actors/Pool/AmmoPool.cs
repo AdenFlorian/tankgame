@@ -3,26 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AmmoPool : MonoBehaviour {
+
 	public static AmmoPool Instance;
 
 	public GameObject tankShellPrefab;
 
-	public int poolSize = 1000;
+	private int initalPoolSize = 100;
+	private int regenerateAmount = 20;
 
 	private Queue<GameObject> tankShellQueue;
 
 	private void Awake() {
-		tankShellQueue = new Queue<GameObject>(poolSize);
+		tankShellQueue = new Queue<GameObject>(initalPoolSize);
 		Instance = this;
-
-		GameObject newShell;
-
-		for (int i = 0; i < poolSize; i++) {
-			newShell = SpawnMaster.Instantiate(tankShellPrefab);
-			tankShellQueue.Enqueue(newShell);
-			newShell.SetActive(false);
-			newShell.rigidbody.isKinematic = true;
-		}
+		GenerateMoreAmmo(initalPoolSize);
 	}
 
 	private void Start() {
@@ -32,10 +26,24 @@ public class AmmoPool : MonoBehaviour {
 	}
 
 	public GameObject GetNextShell() {
+		if (tankShellQueue.Count == 0) {
+			GenerateMoreAmmo(regenerateAmount);
+		}
 		return tankShellQueue.Dequeue();
 	}
 
 	public void ReturnShell(GameObject retrunedGO) {
 		tankShellQueue.Enqueue(retrunedGO);
+	}
+
+	private void GenerateMoreAmmo(int amount) {
+		GameObject newShell;
+
+		for (int i = 0; i < amount; i++) {
+			newShell = SpawnMaster.Instantiate(tankShellPrefab);
+			tankShellQueue.Enqueue(newShell);
+			newShell.SetActive(false);
+			newShell.rigidbody.isKinematic = true;
+		}
 	}
 }
