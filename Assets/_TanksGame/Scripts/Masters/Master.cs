@@ -28,7 +28,9 @@ public abstract class Master {
 		missionMaster = new MissionMaster();
 		spawnMaster = new SpawnMaster();
 
-		missionMaster.LoadMission();
+		//MissionMaster.LoadMission<Level1Mission>();
+
+		// Load MainMenu
 	}
 
 	/// <summary>

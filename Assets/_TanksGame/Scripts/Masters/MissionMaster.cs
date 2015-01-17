@@ -6,7 +6,6 @@ public class MissionMaster : Master {
 	public static Mission currentMission { get; private set; }
 
 	public MissionMaster() {
-		//LoadMission();
 	}
 
 	~MissionMaster() {
@@ -17,8 +16,8 @@ public class MissionMaster : Master {
 		currentMission.triggers[missionEvent].Invoke();
 	}
 
-	public void LoadMission() {
-		currentMission = new MainMission();
+	public static void LoadMission<T>() where T : Mission, new() {
+		currentMission = new T();
 		ReportMissionEvent(MissionEvent.Load);
 	}
 }
