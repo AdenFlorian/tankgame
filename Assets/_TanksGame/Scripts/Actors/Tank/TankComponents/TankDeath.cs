@@ -11,9 +11,8 @@ public class TankDeath : TankComponent {
 	void Update() {
 	}
 
-	public void Die() {
+	public void Explode() {
 		GameObject fx = SpawnMaster.Instantiate(deathFX, tank.transform.position, tank.transform.rotation);
 		Destroy(fx, 10);
-		Destroy(tank.gameObject);
 	}
 }

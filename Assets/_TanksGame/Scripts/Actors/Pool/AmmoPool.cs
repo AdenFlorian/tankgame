@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoPool : MonoBehaviour {
+public class AmmoPool : Actor {
 
 	public static AmmoPool Instance;
 

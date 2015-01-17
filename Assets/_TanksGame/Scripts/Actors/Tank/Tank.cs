@@ -20,8 +20,6 @@ public class Tank : Actor {
 	public TankMainGun mainGun;
 	public TankMover mover;
 
-	public TankControllerType controlledBy;
-
 	// Info for tankMover
 	public TankMove tankMove = new TankMove();
 
@@ -89,13 +87,17 @@ public class Tank : Actor {
 		health.Damage(amount);
 	}
 	public void OnZeroHP() {
-		mainGun.OnActorDeath();
-		MissionMaster.ReportMissionEvent(MissionEvent.ActorDeath);
-		// death script to be called last, as it destroys the gameobject
-		death.Die();
+		death.Explode();
+		Destroy(gameObject);
 	}
 
 	void OnDestroy() {
+		mainGun.OnActorDeath();
+		if (controller.GetType() == typeof(TankControllerPlayer)) {
+			MissionMaster.ReportMissionEvent(MissionEvent.PlayerDeath);
+		} else {
+			MissionMaster.ReportMissionEvent(MissionEvent.ActorDeath);
+		}
 		//Debug.Log(this.actorID);
 		controller.OnActorDeath();
 		controller = null;

@@ -18,5 +18,11 @@ public class InputMaster : Master {
 		} else if (Input.GetKeyDown(KeyCode.Escape)) {
 			Screen.lockCursor = false;
 		}
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			// Kill all enemy tanks
+		}
+		if (Input.GetKeyDown(KeyCode.E)) {
+			// Kill player tank
+		}
 	}
 }
