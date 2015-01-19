@@ -9,4 +9,3 @@ _All you need is Unity3D installed, then open other project, and select the fold
 Import the following untiy packages through Assets>Import Package menu:
 - Image Effects
 - Particles
-- Physic Materials
