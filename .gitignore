@@ -12,8 +12,10 @@
 [Aa]ssets/UnityVS.meta
 [Aa]ssets/Config/
 [Aa]ssets/Config.meta
-
-
+[Aa]ssets/Standard Assets
+[Aa]ssets/Editor
+[Aa]ssets/Standard Assets.meta
+[Aa]ssets/Editor.meta
 
 # Folders in root
 [Ll]ibrary/
