@@ -12,9 +12,10 @@ public class TankCamera : TankComponent {
 	private GameObject cameraDolly;
 
 	private void Start() {
-		cameraDolly = new GameObject("TankCameraDolly");
-		cameraDolly.AddComponent<Camera>();
-		cameraDolly.AddComponent<AudioListener>();
+		//cameraDolly = new GameObject("TankCameraDolly");
+		cameraDolly = GameObject.Instantiate(Resources.Load<GameObject>("TankCamera")) as GameObject;
+		//cameraDolly.AddComponent<Camera>();
+		//cameraDolly.AddComponent<AudioListener>();
 		cameraDolly.transform.parent = tank.transform;
 	}
 

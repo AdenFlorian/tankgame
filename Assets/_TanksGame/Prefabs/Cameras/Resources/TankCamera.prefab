@@ -1,46 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &110314
+--- !u!1 &156242
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 410314}
-  - 20: {fileID: 2010314}
-  - 114: {fileID: 11410314}
-  - 81: {fileID: 8146038}
-  - 114: {fileID: 11468712}
+  - 4: {fileID: 456242}
+  - 20: {fileID: 2056242}
+  - 81: {fileID: 8156242}
+  - 114: {fileID: 11419650}
   m_Layer: 0
-  m_Name: FollowCamera
+  m_Name: TankCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &410314
+--- !u!4 &456242
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110314}
-  m_LocalRotation: {x: 0, y: -.397548288, z: 0, w: .91758126}
-  m_LocalPosition: {x: 5.38999987, y: .560000002, z: -6.78000021}
+  m_GameObject: {fileID: 156242}
+  m_LocalRotation: {x: 0, y: -.440145433, z: 0, w: .897926569}
+  m_LocalPosition: {x: 5.30999994, y: .49000001, z: -6.61999989}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!20 &2010314
+--- !u!20 &2056242
 Camera:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110314}
+  m_GameObject: {fileID: 156242}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: .139705896, g: .139705896, b: .139705896, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -52,7 +51,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 9.80000019
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -63,37 +62,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
---- !u!81 &8146038
+--- !u!81 &8156242
 AudioListener:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110314}
+  m_GameObject: {fileID: 156242}
   m_Enabled: 1
---- !u!114 &11410314
+--- !u!114 &11419650
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e808e6e26a4a9d143912c6071f8730f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  follow: 1
-  lookAt: 1
-  desiredPosition: {x: 2.33291078, y: 1.10877585, z: -2.67083216}
-  desiredDistance: 2
-  desiredHeightOffset: .389999986
-  desiredAngleOffset: 5.38000011
---- !u!114 &11468712
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110314}
+  m_GameObject: {fileID: 156242}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a773099f140e846f7835d27351846623, type: 3}
@@ -102,10 +83,10 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 2
-  sepBlurSpread: 3.44000006
+  sepBlurSpread: .100000001
   quality: 1
-  bloomIntensity: .709999979
-  bloomThreshhold: .0599999987
+  bloomIntensity: .74000001
+  bloomThreshhold: .25
   bloomThreshholdColor: {r: 1, g: 1, b: 1, a: 1}
   bloomBlurIterations: 1
   hollywoodFlareBlurIterations: 2
@@ -136,6 +117,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 110314}
+  m_RootGameObject: {fileID: 156242}
   m_IsPrefabParent: 1
   m_IsExploded: 1
