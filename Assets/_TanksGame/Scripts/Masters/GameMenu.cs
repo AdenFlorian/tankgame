@@ -8,7 +8,7 @@ public class GameMenu : GameState {
 		menu = GameObject.Instantiate(Resources.Load<GameObject>("MainMenu")) as GameObject;
 
 		if (GameMaster.isPlayerWin) {
-			// Show you rock! text
+			// Show success text
 			menu.transform.FindChild("Canvas/TextSuccess").gameObject.SetActive(true);
 		} else if (GameMaster.isPlayerDead) {
 			// rekt
