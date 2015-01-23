@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: gridemmissive
-  m_Shader: {fileID: 4800000, guid: 597fd94982b80d54880c960607bfb17d, type: 3}
+  m_Shader: {fileID: 4800000, guid: 81306446f6c17c647a9375975fd61c78, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -37,8 +37,8 @@ Material:
     m_Floats:
       data:
         first:
-          name: _node_2089
-        second: 0
+          name: _node_6667
+        second: 71.9300003
       data:
         first:
           name: _Shininess
@@ -49,8 +49,32 @@ Material:
         second: 4.21999979
       data:
         first:
-          name: _node_6667
-        second: 6.69000006
+          name: _node_2089
+        second: 0
+      data:
+        first:
+          name: _multiply
+        second: 8.19999981
+      data:
+        first:
+          name: _exponent
+        second: 27.3999996
+      data:
+        first:
+          name: _node_9002
+        second: 1.92857146
+      data:
+        first:
+          name: _node_7438
+        second: .410714298
+      data:
+        first:
+          name: _node_7050
+        second: 0
+      data:
+        first:
+          name: _slider
+        second: 1
     m_Colors:
       data:
         first:
@@ -59,7 +83,7 @@ Material:
       data:
         first:
           name: _tint
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 1, g: .351724148, b: 0, a: 1}
       data:
         first:
           name: _SpecColor

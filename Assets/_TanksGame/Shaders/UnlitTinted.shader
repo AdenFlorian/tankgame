@@ -83,8 +83,7 @@ Shader "Aden/UnlitTinted" {
 ////// Lighting:
 ////// Emissive:
                 float4 _diffuseTex_var = tex2D(_diffuseTex,TRANSFORM_TEX(i.uv0, _diffuseTex));
-                float3 node_1514 = (_diffuseTex_var.rgb*_tint.rgb*i.vertexColor.rgb);
-                float3 emissive = ((Function_node_4784( (i.uv0.r-i.uv0.g) , _node_6667 )*node_1514)*_diffuseTex_var.rgb);
+                float3 emissive = ((Function_node_4784( (i.uv0.r-i.uv0.g) , _node_6667 )*(_diffuseTex_var.rgb*_tint.rgb*i.vertexColor.rgb))*_diffuseTex_var.rgb);
                 float3 finalColor = emissive;
                 return fixed4(finalColor,1);
             }
