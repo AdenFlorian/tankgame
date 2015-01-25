@@ -4,7 +4,7 @@ using UnityEngine;
 public class GamePlaying : GameState {
 	public override void Enter() {
 		// Load mission
-		MissionMaster.LoadMission<TankSurvivalMission>();
+		MissionMaster.LoadMission<TestMission>();
 	}
 	public override void Exit() {
 		// Clean up mission

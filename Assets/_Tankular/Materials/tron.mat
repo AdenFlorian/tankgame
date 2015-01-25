@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: gridemmissive
+  m_Name: tron
   m_Shader: {fileID: 4800000, guid: 81306446f6c17c647a9375975fd61c78, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
@@ -22,14 +22,14 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _diffuseTex
+          name: _Illum
         second:
           m_Texture: {fileID: 2800000, guid: a008a695bbac47944af0d2fa704236b6, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Illum
+          name: _diffuseTex
         second:
           m_Texture: {fileID: 2800000, guid: a008a695bbac47944af0d2fa704236b6, type: 3}
           m_Scale: {x: 1, y: 1}
@@ -37,8 +37,8 @@ Material:
     m_Floats:
       data:
         first:
-          name: _node_6667
-        second: 71.9300003
+          name: _Cutoff
+        second: .5
       data:
         first:
           name: _Shininess
@@ -49,31 +49,79 @@ Material:
         second: 4.21999979
       data:
         first:
-          name: _node_2089
-        second: 0
+          name: _multiply
+        second: 35.9000015
       data:
         first:
-          name: _multiply
-        second: 8.19999981
+          name: _transX
+        second: -4.8499999
+      data:
+        first:
+          name: _power
+        second: 3.46000004
       data:
         first:
           name: _exponent
-        second: 27.3999996
+        second: 25.6599998
       data:
         first:
           name: _node_9002
-        second: 1.92857146
+        second: 2.41071439
       data:
         first:
           name: _node_7438
-        second: .410714298
+        second: .464285731
+      data:
+        first:
+          name: _slider
+        second: .5
+      data:
+        first:
+          name: _node_6667
+        second: 71.9300003
+      data:
+        first:
+          name: _node_2089
+        second: 0
       data:
         first:
           name: _node_7050
         second: 0
       data:
         first:
-          name: _slider
+          name: _stretchX
+        second: 2.07142854
+      data:
+        first:
+          name: _node_2851
+        second: 1
+      data:
+        first:
+          name: _node_1151
+        second: 0
+      data:
+        first:
+          name: _node_3262
+        second: 0
+      data:
+        first:
+          name: _step2
+        second: 1
+      data:
+        first:
+          name: _step1
+        second: 3.57142854
+      data:
+        first:
+          name: _thinness
+        second: 150.899994
+      data:
+        first:
+          name: _glow
+        second: 3
+      data:
+        first:
+          name: _faceOpacity
         second: 1
     m_Colors:
       data:
@@ -82,9 +130,9 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _tint
-        second: {r: 1, g: .351724148, b: 0, a: 1}
-      data:
-        first:
           name: _SpecColor
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _tint
+        second: {r: .324137926, g: 1, b: 0, a: 1}

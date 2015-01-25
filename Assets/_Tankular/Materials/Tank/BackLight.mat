@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BackLight
-  m_Shader: {fileID: 10, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 14, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -30,6 +30,10 @@ Material:
     m_Floats:
       data:
         first:
+          name: _Shininess
+        second: 1
+      data:
+        first:
           name: _EmissionLM
         second: 0
     m_Colors:
@@ -37,3 +41,7 @@ Material:
         first:
           name: _Color
         second: {r: .91911763, g: .237236753, b: .175713673, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
