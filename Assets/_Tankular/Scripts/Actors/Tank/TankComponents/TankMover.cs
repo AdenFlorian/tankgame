@@ -59,21 +59,26 @@ public class TankMover : TankComponent {
 		RotateGun(tankMove.rotateGun);
 		AngleGun(tank.mainGun.transform, tankMove.angleGun);
 		MoveOrder(tankMove);
-
-		transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
+		if (currentTurnRate != 0f) {
+			transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
+		}
 
 		CheckIfGrounded();
 
-		if (isGrounded) {
-			rigidbody.AddRelativeForce(new Vector3(0f, 0f, forthBackForce) * Time.deltaTime * 1000, ForceMode.Force);
-		}
+		Vector3 moveVec3 = Vector3.forward * forthBackForce * Time.deltaTime * 1000;
 
+		Debug.Log(rigidbody.velocity);
+
+		if (isGrounded && moveVec3.magnitude != 0f) {
+			//Debug.Log("!");
+			rigidbody.AddRelativeForce(moveVec3, ForceMode.Acceleration);
+		}
 		tank.tankMove.Clear();
 	}
 
 	private void CheckIfGrounded() {
 		Vector3 tankDownVecWorld = transform.localToWorldMatrix.MultiplyVector(-Vector3.up);
-		Ray ray = new Ray(transform.position, tankDownVecWorld);
+		Ray ray = new Ray(transform.position + new Vector3(0, 0.1f, 0f), tankDownVecWorld);
 		float rayLength = 0.2f;
 		Debug.DrawRay(ray.origin, ray.direction * rayLength);
 		bool hitSomething = Physics.Raycast(ray, rayLength);

@@ -49,6 +49,22 @@ Material:
         second: 4.21999979
       data:
         first:
+          name: _glow
+        second: 3
+      data:
+        first:
+          name: _thinness
+        second: 150.899994
+      data:
+        first:
+          name: _faceOpacity
+        second: 1
+      data:
+        first:
+          name: _node_6667
+        second: 71.9300003
+      data:
+        first:
           name: _multiply
         second: 35.9000015
       data:
@@ -75,10 +91,6 @@ Material:
         first:
           name: _slider
         second: .5
-      data:
-        first:
-          name: _node_6667
-        second: 71.9300003
       data:
         first:
           name: _node_2089
@@ -111,18 +123,6 @@ Material:
         first:
           name: _step1
         second: 3.57142854
-      data:
-        first:
-          name: _thinness
-        second: 150.899994
-      data:
-        first:
-          name: _glow
-        second: 3
-      data:
-        first:
-          name: _faceOpacity
-        second: 1
     m_Colors:
       data:
         first:
