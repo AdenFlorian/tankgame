@@ -5,7 +5,7 @@ public abstract class Master {
 
 	protected static ActionMaster actionMaster;
 	protected static ControllerMaster controllerMaster;
-	protected static GameMaster gameMaster;
+	public static GameMaster gameMaster;
 	protected static InputMaster inputMaster;
 	protected static MenuMaster menuMaster;
 	protected static MissionMaster missionMaster;
@@ -27,8 +27,6 @@ public abstract class Master {
 		menuMaster = new MenuMaster();
 		missionMaster = new MissionMaster();
 		spawnMaster = new SpawnMaster();
-
-		//MissionMaster.LoadMission<Level1Mission>();
 
 		// Load MainMenu
 	}

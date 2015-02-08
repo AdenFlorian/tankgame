@@ -104,13 +104,18 @@ public class ActionMaster : Master {
 	private void AddDefaultKeyCodes() {
 		// Weapon Actions
 		keyCodesFor[ActionCode.PrimaryFire].Add(KeyCodeExt.Mouse0);
+		keyCodesFor[ActionCode.PrimaryFire].Add(KeyCodeExt.Space);
 		keyCodesFor[ActionCode.SecondaryFire].Add(KeyCodeExt.Mouse1);
 
 		// Movement Actions
 		keyCodesFor[ActionCode.MoveForward].Add(KeyCodeExt.W);
+		keyCodesFor[ActionCode.MoveForward].Add(KeyCodeExt.UpArrow);
 		keyCodesFor[ActionCode.MoveBackward].Add(KeyCodeExt.S);
+		keyCodesFor[ActionCode.MoveBackward].Add(KeyCodeExt.DownArrow);
 		keyCodesFor[ActionCode.TurnLeft].Add(KeyCodeExt.A);
+		keyCodesFor[ActionCode.TurnLeft].Add(KeyCodeExt.LeftArrow);
 		keyCodesFor[ActionCode.TurnRight].Add(KeyCodeExt.D);
+		keyCodesFor[ActionCode.TurnRight].Add(KeyCodeExt.RightArrow);
 	}
 
 	#endregion DictionaryMethods

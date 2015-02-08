@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: tronAI
+  m_Shader: {fileID: 4800000, guid: 81306446f6c17c647a9375975fd61c78, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: a008a695bbac47944af0d2fa704236b6, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _diffuseTex
+        second:
+          m_Texture: {fileID: 2800000, guid: a008a695bbac47944af0d2fa704236b6, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Illum
+        second:
+          m_Texture: {fileID: 2800000, guid: a008a695bbac47944af0d2fa704236b6, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _glow
+        second: 3
+      data:
+        first:
+          name: _thinness
+        second: 150.899994
+      data:
+        first:
+          name: _faceOpacity
+        second: 1
+      data:
+        first:
+          name: _node_6667
+        second: 71.9300003
+      data:
+        first:
+          name: _Shininess
+        second: .699999988
+      data:
+        first:
+          name: _EmissionLM
+        second: 4.21999979
+      data:
+        first:
+          name: _multiply
+        second: 35.9000015
+      data:
+        first:
+          name: _transX
+        second: -4.8499999
+      data:
+        first:
+          name: _power
+        second: 3.46000004
+      data:
+        first:
+          name: _exponent
+        second: 25.6599998
+      data:
+        first:
+          name: _node_9002
+        second: 2.41071439
+      data:
+        first:
+          name: _node_7438
+        second: .464285731
+      data:
+        first:
+          name: _slider
+        second: .5
+      data:
+        first:
+          name: _node_2089
+        second: 0
+      data:
+        first:
+          name: _node_7050
+        second: 0
+      data:
+        first:
+          name: _stretchX
+        second: 2.07142854
+      data:
+        first:
+          name: _node_2851
+        second: 1
+      data:
+        first:
+          name: _node_1151
+        second: 0
+      data:
+        first:
+          name: _node_3262
+        second: 0
+      data:
+        first:
+          name: _step2
+        second: 1
+      data:
+        first:
+          name: _step1
+        second: 3.57142854
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _tint
+        second: {r: 1, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}

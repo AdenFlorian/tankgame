@@ -11,6 +11,8 @@ public class Tank : Actor {
 
 	public TankController controller;
 
+	public Renderer[] attachedRenderers;
+
 	// Tank Components
 	public new TankAudio audio;
 	public new TankCamera camera;
@@ -39,6 +41,9 @@ public class Tank : Actor {
 				break;
 			case ControlledBy.AI:
 				controller = new TankControllerAI(this);
+				foreach (Renderer rend in attachedRenderers) {
+					rend.material = Resources.Load<Material>("tronAI");
+				}
 				break;
 			case ControlledBy.Empty:
 				controller = new TankController(this);

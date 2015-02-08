@@ -15,7 +15,9 @@ public class MissionMaster : Master {
 
 	public static void ReportMissionEvent(MissionEvent missionEvent) {
 		if (isMissionLoaded) {
-			currentMission.triggers[missionEvent].Invoke();
+			if (currentMission.triggers[missionEvent] != null) {
+				currentMission.triggers[missionEvent].Invoke();
+			}
 		}
 	}
 

@@ -4,6 +4,7 @@ public class GameMaster : Master {
 
 	public static bool isPlayerDead = false;
 	public static bool isPlayerWin = false;
+	public static bool isPlayerQuit = false;
 
 	GameState gameState;
 
@@ -20,5 +21,19 @@ public class GameMaster : Master {
 			gameState = newState;
 			gameState.Enter();
 		}
+	}
+
+	public void Pause() {
+		Time.timeScale = 0;
+	}
+
+	public void Resume() {
+		Time.timeScale = 1;
+	}
+
+	public void Reset() {
+		isPlayerDead = false;
+		isPlayerWin = false;
+		isPlayerQuit = false;
 	}
 }

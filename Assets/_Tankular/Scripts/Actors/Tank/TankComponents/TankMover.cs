@@ -59,6 +59,7 @@ public class TankMover : TankComponent {
 		RotateGun(tankMove.rotateGun);
 		AngleGun(tank.mainGun.transform, tankMove.angleGun);
 		MoveOrder(tankMove);
+
 		if (currentTurnRate != 0f) {
 			transform.Rotate(0f, currentTurnRate * Time.deltaTime, 0f, Space.Self);
 		}
@@ -67,12 +68,10 @@ public class TankMover : TankComponent {
 
 		Vector3 moveVec3 = Vector3.forward * forthBackForce * Time.deltaTime * 1000;
 
-		Debug.Log(rigidbody.velocity);
-
 		if (isGrounded && moveVec3.magnitude != 0f) {
-			//Debug.Log("!");
 			rigidbody.AddRelativeForce(moveVec3, ForceMode.Acceleration);
 		}
+
 		tank.tankMove.Clear();
 	}
 

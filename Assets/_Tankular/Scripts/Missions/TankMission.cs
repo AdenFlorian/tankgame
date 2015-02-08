@@ -22,9 +22,7 @@ public abstract class TankMission : Mission {
 	}
 
 	protected virtual void OnMissionLoad() {
-		GameMaster.isPlayerDead = false;
-		GameMaster.isPlayerWin = false;
-
+		Master.gameMaster.Reset();
 		// Spawn AmmoPool
 		SpawnMaster.SpawnActor<AmmoPool>();
 
